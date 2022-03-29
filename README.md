@@ -2,3 +2,5 @@
 
 This is Stat 6021: Project 2
 
+LINKS: 
+-github: https://github.com/grm7q/STAT_6021_Project_2
