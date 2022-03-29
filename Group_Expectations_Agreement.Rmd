@@ -1,0 +1,27 @@
+---
+title: "Group Expectations Agreement"
+output: pdf_document
+---
+
+Part 1: Group Expectations Agreement
+As mentioned, this project will be completed in randomly assigned groups of 3-4 students. A lot of work in data science is completed in groups, so knowing how to successfully complete group work will be beneficial! You have also seen that there may be more than one way to approach a data analysis question, so feel free to explore various ideas brought up by each group member and learn from each other!
+
+For this part of your project, your group will submit a Group Expectations Agreement. Samples are provided on Collab as suggestions. Your group will create a document, put your names, and list the expectations you agree as a group to adopt for this project. Given the online nature of this course, you group should address at least the following aspects:
+
+
+• Mode of communication between group members. 
+• How to schedule meetings.
+• How to conduct meetings.
+• How to handle disagreements.
+
+The expectations are for your use and benefit; they will not be graded or commented on unless you specifically ask for comments. Note that the list should be fairly thorough without being unrealistic. For example, “We will solve every problem completely” or “We will get a perfect score for the project” or “We will never miss a meeting” are unrealistic, but “We will be sure to understand our tasks prior to our next meeting” and “We will try to be as flexible as possible in scheduling meetings” are realistic.
+
+Group work is not always easy; group members sometimes cannot prepare for or attend all meetings due to other responsibilities, and conflicts may arise from different skill levels and work ethics. When groups work and communicate well, the benefits more than compensate for the difficulties. One way to improve the chances a group works well is to agree beforehand on what everyone on the group expects from everyone else. Reaching this understanding is the goal of the Group Expectations Agreement.
+Submission
+
+• Please submit your Group Expectations Agreement (.pdf file) via Assignments. 
+• Every student will submit a document.
+• Documents within a group should be identical.
+• Submission indicates agreement with the document.
+
+Failure to submit a Group Expectations Agreement will result in getting a 0 for Project 2.
