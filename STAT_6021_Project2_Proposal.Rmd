@@ -6,7 +6,6 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE)
 
-#library(MASS)
 library(multcomp)
 library(lawstat)
 library(leaps)
@@ -17,6 +16,8 @@ options(scipen = 99999999)
 ```
 
 Part 2: Proposal
+
+***ideas in bold.***
 
 Each group will submit a project proposal for approval by the instructor, to ensure that an appropriate data set is being used and an appropriate amount of analysis will be done to produce a successful 4 week project. Each proposal should provide:
 
@@ -30,7 +31,7 @@ Each group will submit a project proposal for approval by the instructor, to ens
 ```{r}
 #from data("Nursing") package
 ?Nursing
-Data <- Nursing
+Data <- data("Nursing")
 
 ```
 
@@ -45,18 +46,22 @@ Data <- Nursing
 write.csv(Data, "Nursing.csv")
 ```
 
-
 • Project objectives/goals. What questions is the group trying to answer, as well as potential practical implications (the more interesting and/or practical, the better) of the results. Your project should involve both linear regression and logistic regression, so clearly state the response variables involved.
 
-Q1. What characteristics of nursing homes in New Mexico dictate annual nurse salaries at those institutions. 
+***Q1. What characteristics of nursing homes in New Mexico dictate annual nurse salaries at those institutions? ***
 
 ***Practical implications of a linear model for predicting nurse salaries could be used by policymakers to rationally distribute subsidy funds to institutions that are expected to have the lowest salaries.***
 
-Q2. What factors are associated with rural vs. non-rural nursing homes.  
+***Q2. What factors are associated with rural vs. non-rural nursing homes.  ***
 
 ***Rural patients suffer from a lack of locally available nursing home beds. Understanding the relationships of these characteristics and how they define  rural vs. non-rural nursing homes is helpful to know how to make rural nursing homes financially viable. ***
 
 • Some data visualizations and commentary related to the project objectives/goals. At least one visualization related to linear regression, and at least one visualization related to logistic regression.
+
+***Objective 1: Fit a multiple linear regression model with annual nurse salary for individual nursing homes using the available financial characteristics for each institution. The goal is to develop a model using these available data to reliably predict annual nursing salaries among the larger group of nursing homes across the state. ***
+
+
+***Objective 2: Fit a logistic regression model with rural vs. non-rural status as the response using the available financial characteristics. ***
 
 The proposal should be no longer than 6 pages. The proposal will be graded on a pass / fail basis. The proposal will be evaluated on the following:
 
