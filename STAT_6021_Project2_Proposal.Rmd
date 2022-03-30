@@ -1,17 +1,18 @@
 ---
-title: "STAT_6021_Project2_Proposal"
+title: "STAT_6021_Project2_Proposal: Characteristics of nursing homes in New Mexico."
 output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE)
 
-library(MASS)
+#library(MASS)
 library(multcomp)
 library(lawstat)
 library(leaps)
 library(tidyverse)
-
+#install.packages("Stat2Data") 
+library(Stat2Data)
 options(scipen = 99999999) 
 ```
 
@@ -23,38 +24,37 @@ Each group will submit a project proposal for approval by the instructor, to ens
 
 1) providing the names of the R package and the R dataframe; 
 
-***R Package: "MASS"***
+***R Package: "data("Nursing")"***
 
-***R dataframe: "crabs"***
+***R dataframe: "Nursing"***
 ```{r}
-#from MASS package
-?crabs
-head(crabs)
+#from data("Nursing") package
+?Nursing
+Data <- Nursing
 
 ```
 
 
 2) a link to the data set; 
 
-***Data can be found at: https://r-data.pmagunia.com/dataset/r-dataset-package-mass-crabs***
+***Data can be found at: http://lib.stat.cmu.edu/DASL/Datafiles/Nursingdat.html***
 
 3) a file containing the data, as an Excel spreadsheet, a .csv file, or a .txt file. Please note that a list of some publicly available sources of data sets is provided on Collab.
 
 ```{r}
-write.csv(crabs, "crab.data.csv")
+write.csv(Data, "Nursing.csv")
 ```
-
-<p>
-![Diagram of Crab Measurements.](crab.png)
-
-***Image adapted from: Campbell, N.A. and Mahon, R.J. (1974) A multivariate study of variation in two species of rock crab of genus Leptograpsus. Australian Journal of Zoology 22, 417–425.***
-
-<p>
 
 
 • Project objectives/goals. What questions is the group trying to answer, as well as potential practical implications (the more interesting and/or practical, the better) of the results. Your project should involve both linear regression and logistic regression, so clearly state the response variables involved.
 
+Q1. What characteristics of nursing homes in New Mexico dictate annual nurse salaries at those institutions. 
 
+***Practical implications of a linear model for predicting nurse salaries could be used by policymakers to rationally distribute subsidy funds to institutions that are expected to have the lowest salaries.***
+
+Q2. What factors are associated with rural vs. non-rural nursing homes.  
+
+***Rural patients suffer from a lack of locally available nursing home beds. Understanding the relationships of these characteristics and how they define  rural vs. non-rural nursing homes is helpful to know how to make rural nursing homes financially viable. ***
 
 • Some data visualizations and commentary related to the project objectives/goals. At least one visualization related to linear regression, and at least one visualization related to logistic regression.
 
