@@ -1,5 +1,6 @@
 ---
-title: "Group Expectations Agreement"
+title: "Group Expectations Agreement - Group 2"
+author: "Gregory Madden, Christina Kuang, Chi Do, Trey Hamilton"
 output: pdf_document
 ---
 
@@ -25,3 +26,24 @@ Submission
 • Submission indicates agreement with the document.
 
 Failure to submit a Group Expectations Agreement will result in getting a 0 for Project 2.
+
+
+
+
+
+Sample Group Expectations for Effective Group Work
+
+Share responsibility for including all voices in the discussion.
+Strive for intellectual humility. Be willing to grapple with challenging ideas.
+Differentiate between opinion, which everyone has, and informed knowledge, which comes from sustained experience, study, and practice.
+Create roles for each member of the group. Roles may be the same for the duration of the project or change from week to week. Some roles could be:
+An organizer. The organizer is tasked to keep the group on track and to guide the meeting back on track if the discussion goes off tangent. 
+A recorder. The recorder is tasked with documenting the group's questions, discussions, as well as assigned tasks for each group member during a meeting. Using a google doc that is shared among all group members may be a good idea. 
+A checker. The checker pauses the discussion from time to time to give everyone in the group a chance to ask questions, raise doubts, seek clarifications, etc. Ensures that everyone is clear about their assigned task.
+A scheduler. Group members are expected to give the scheduler a list of times they are available during the week. 
+Clearly state a mode of communication between members of the group, as well as realistic response times.
+Decide on how a member will express uncertainty about the group work during a meeting.
+If there is a disagreement about how to proceed with the project, to seek direction from the instructor
+Inform other group members if you are unable to attend a meeting with good reason.
+Agree to meet as a group with the instructor during office hours sometime or a few times (be specific) before the project is due.
+Complete the peer reviews honestly and respectfully.

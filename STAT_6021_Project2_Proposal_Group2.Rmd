@@ -1,5 +1,6 @@
 ---
-title: "STAT_6021_Project2_Proposal: Characteristics of nursing homes in New Mexico."
+title: "STAT 6021 Project2 (Group 2) Proposal: Characteristics of nursing homes in New Mexico."
+author: "Gregory Madden, Christina Kuang, Chi Do, Trey Hamilton"
 output: pdf_document
 ---
 
@@ -77,4 +78,7 @@ Feedback will be provided for group proposals that are rejected. Groups will hav
 
 Submission
 Please submit your group’s proposal (.pdf file) via Assignments (1 upload per group).
+
+
+
 
