@@ -4,46 +4,33 @@ author: "Gregory Madden, Christina Kuang, Chi Do, Trey Hamilton"
 output: pdf_document
 ---
 
-Part 1: Group Expectations Agreement
-As mentioned, this project will be completed in randomly assigned groups of 3-4 students. A lot of work in data science is completed in groups, so knowing how to successfully complete group work will be beneficial! You have also seen that there may be more than one way to approach a data analysis question, so feel free to explore various ideas brought up by each group member and learn from each other!
+***Group Expectations Agreement***
 
-For this part of your project, your group will submit a Group Expectations Agreement. Samples are provided on Collab as suggestions. Your group will create a document, put your names, and list the expectations you agree as a group to adopt for this project. Given the online nature of this course, you group should address at least the following aspects:
+We have agreed to adopt the following expectations for this project: 
 
+***• Mode of communication between group members: ***
+We will use slack to communicate as a group. Trey will set up the slack channel. 
 
-• Mode of communication between group members. 
-• How to schedule meetings.
-• How to conduct meetings.
-• How to handle disagreements.
+***• How to schedule meetings:***
+Christina Kuang will set up a "WhenToMeet" poll to agree on regular meeting times so that the largest proportion of the group is able to meet each time. 
 
-The expectations are for your use and benefit; they will not be graded or commented on unless you specifically ask for comments. Note that the list should be fairly thorough without being unrealistic. For example, “We will solve every problem completely” or “We will get a perfect score for the project” or “We will never miss a meeting” are unrealistic, but “We will be sure to understand our tasks prior to our next meeting” and “We will try to be as flexible as possible in scheduling meetings” are realistic.
+***• How to conduct meetings:***
+We will meet via zoom and take turns sharing our screens. 
 
-Group work is not always easy; group members sometimes cannot prepare for or attend all meetings due to other responsibilities, and conflicts may arise from different skill levels and work ethics. When groups work and communicate well, the benefits more than compensate for the difficulties. One way to improve the chances a group works well is to agree beforehand on what everyone on the group expects from everyone else. Reaching this understanding is the goal of the Group Expectations Agreement.
-Submission
+***• How to handle disagreements:***
+We will hold a vote for disagreements; majority 'wins'. 
 
-• Please submit your Group Expectations Agreement (.pdf file) via Assignments. 
-• Every student will submit a document.
-• Documents within a group should be identical.
-• Submission indicates agreement with the document.
+***• In addition, we have assigned the following group member roles:***
 
-Failure to submit a Group Expectations Agreement will result in getting a 0 for Project 2.
+***Organizer:*** The organizer is tasked to keep the group on track and to guide the meeting back on track if the discussion goes off tangent. 
+***Chi Do ***
 
+***Recorder:*** The recorder is tasked with documenting the group's questions, discussions, as well as assigned tasks for each group member during a meeting. Using a google doc that is shared among all group members may be a good idea. 
+***Greg Madden***
 
+***Checker:*** The checker pauses the discussion from time to time to give everyone in the group a chance to ask questions, raise doubts, seek clarifications, etc. Ensures that everyone is clear about their assigned task. 
+***Trey Hamilton***
 
+***Scheduler:*** Group members are expected to give the scheduler a list of times they are available during the week.
+***Christina Kuang***
 
-
-Sample Group Expectations for Effective Group Work
-
-Share responsibility for including all voices in the discussion.
-Strive for intellectual humility. Be willing to grapple with challenging ideas.
-Differentiate between opinion, which everyone has, and informed knowledge, which comes from sustained experience, study, and practice.
-Create roles for each member of the group. Roles may be the same for the duration of the project or change from week to week. Some roles could be:
-An organizer. The organizer is tasked to keep the group on track and to guide the meeting back on track if the discussion goes off tangent. 
-A recorder. The recorder is tasked with documenting the group's questions, discussions, as well as assigned tasks for each group member during a meeting. Using a google doc that is shared among all group members may be a good idea. 
-A checker. The checker pauses the discussion from time to time to give everyone in the group a chance to ask questions, raise doubts, seek clarifications, etc. Ensures that everyone is clear about their assigned task.
-A scheduler. Group members are expected to give the scheduler a list of times they are available during the week. 
-Clearly state a mode of communication between members of the group, as well as realistic response times.
-Decide on how a member will express uncertainty about the group work during a meeting.
-If there is a disagreement about how to proceed with the project, to seek direction from the instructor
-Inform other group members if you are unable to attend a meeting with good reason.
-Agree to meet as a group with the instructor during office hours sometime or a few times (be specific) before the project is due.
-Complete the peer reviews honestly and respectfully.
