@@ -2,6 +2,13 @@
 
 This is Stat 6021: Project 2
 
+MEMBERS: 
+
+Gregory Madden
+Christina Kuang
+Chi Do
+Trey Hamilton
+
 LINKS: 
 
 • github: https://github.com/grm7q/STAT_6021_Project_2
