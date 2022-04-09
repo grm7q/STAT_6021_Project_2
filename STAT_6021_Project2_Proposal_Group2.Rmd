@@ -5,47 +5,29 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE)
-
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, cache =TRUE)
 library(multcomp)
 library(lawstat)
 library(leaps)
 library(tidyverse)
-#install.packages("Stat2Data") 
 library(Stat2Data)
 options(scipen = 99999999) 
+
 ```
 
 Part 2: Proposal
 
-***ideas in bold.***
-
-Each group will submit a project proposal for approval by the instructor, to ensure that an appropriate data set is being used and an appropriate amount of analysis will be done to produce a successful 4 week project. Each proposal should provide:
-
-• The associated data set for the project should be provided, in one of the following ways: 
-
-1) providing the names of the R package and the R dataframe; 
+Names of the R package and the R dataframe: 
 
 ***R Package: "data("Nursing")"***
 
 ***R dataframe: "Nursing"***
-```{r}
-#from data("Nursing") package
-print(?Nursing)
-Data <- Nursing
 
-```
-
-
-Nursing Homes
-
-Description
+***Description of Dataset (provided by Stat2Data Package)***
 
 Characteristics of nursing homes in New Mexico.
 
-Format
-
-A dataset with 52 observations on the following 7 variables.
+Format: A dataset with 52 observations on the following 7 variables.
 
 Beds	Number of beds in the nursing home
 InPatientDays	Annual medical in-patient days (in hundreds)
@@ -54,29 +36,40 @@ PatientRevenue	Annual patient care revenue (in hundreds of dollars)
 NurseSalaries	Annual nursing salaries (in hundreds of dollars)
 FacilitiesExpend	Annual facilities expenditure (in hundreds of dollars)
 Rural	1=rural or 0=non-rural
-Details
 
-The data were collected by the Department of Health and Social Services of the State of New Mexico and cover 52 of the 60 licensed nursing facilities in New Mexico in 1988.
+Details: The data were collected by the Department of Health and Social Services of the State of New Mexico and cover 52 of the 60 licensed nursing facilities in New Mexico in 1988.
 
-Source
-
-Downloaded from DASL at http://lib.stat.cmu.edu/DASL/Datafiles/Nursingdat.html
-
-References
-
+References: 
 Howard L. Smith, Niell F. Piland, and Nancy Fisher, "A Comparison of Financial Performance, Organizational Characteristics, and Management Strategy Among Rural and Urban Nursing Facilities," Journal of Rural Health, Winter 1992, pp 27-40.
 
-2) a link to the data set; 
+A link to the data set: 
 
 ***Data can be found at: http://lib.stat.cmu.edu/DASL/Datafiles/Nursingdat.html***
 
-3) a file containing the data, as an Excel spreadsheet, a .csv file, or a .txt file. Please note that a list of some publicly available sources of data sets is provided on Collab.
+Saving a file containing the data, as a .csv file. 
 
 ```{r}
-write.csv(Data, "Nursing.csv")
+
+#For some reason, Nursing dataset does not call correctly when knitting markdown so commented here
+#uncomment and run below code when running in new environment
+
+#Data <- Nursing
+#write.csv(Data, "Nursing.csv")
+
+Data <- read.csv("Nursing.csv")
 ```
 
-• Project objectives/goals. What questions is the group trying to answer, as well as potential practical implications (the more interesting and/or practical, the better) of the results. Your project should involve both linear regression and logistic regression, so clearly state the response variables involved.
+Showing the first few entries of the dataset: 
+
+```{r}
+
+head(Data)
+
+
+```
+
+
+• Project objectives/goals. What questions is the group trying to answer, as well as potential practical implications (the more interesting and/or practical, the better) of the results?  
 
 ***Q1. What characteristics of nursing homes in New Mexico dictate annual nurse salaries at those institutions? ***
 
@@ -86,12 +79,12 @@ write.csv(Data, "Nursing.csv")
 
 ***Rural patients suffer from a lack of locally available nursing home beds. Understanding the relationships of these characteristics and how they define  rural vs. non-rural nursing homes is helpful to know how to make rural nursing homes financially viable. ***
 
-• Some data visualizations and commentary related to the project objectives/goals. At least one visualization related to linear regression, and at least one visualization related to logistic regression.
+• Some data visualizations and commentary related to the project objectives/goals. 
 
 Nursing home salaries by Annual facilities expenditure (in hundreds of dollars) and Nursing home size (by number of beds):
 
-
 ```{r}
+
 Data %>%
   ggplot(aes(x=FacilitiesExpend, y = NurseSalaries, size = Beds)) +
   geom_point(alpha = 0.4) +
@@ -106,10 +99,11 @@ Nursing home salaries by census in Annual total patient days (in hundreds) and N
 Data %>%
   ggplot(aes(x=AllPatientDays, y = NurseSalaries, size = PatientRevenue)) +
   geom_point(alpha = 0.4) +
-  labs(x="Annual total patient days (hundreds $)", y="Average Nurse Salary", title = "Nursing Home Nurse Salaries (hundreds $)") +
+  labs(x="Annual total patient days (hundreds $)", y="Average Nurse Salary (hundreds $)", title = "Nursing Home Nurse Salaries") +
   guides(size = guide_legend(title = "Annual patient \ncare revenue\n (hundreds $)"))
 ```
 
+Boxplot demonstrating differences in Institutional nurse's salaries in New Mexico for Rural Areas compared with Non-Rural: 
 
 ```{r}
 Data$Rural <- factor(Data$Rural)
@@ -118,31 +112,16 @@ levels(Data$Rural) <- c("Non-Rural", "Rural")
 Data %>%
 ggplot(aes(x=Rural, y=NurseSalaries))+
   geom_boxplot()+
-  labs(x="", y="Average Nurse Salary", title = "Nursing Home Nurse Salaries (hundreds $)") 
+  labs(x="", y="Nurse Salary", title = "Nursing Home Nurse Salaries (hundreds $)") 
 
 ```
 
+
+***Objectives:***
 
 ***Objective 1: Fit a multiple linear regression model with annual nurse salary for individual nursing homes using the available financial characteristics for each institution. The goal is to develop a model using these available data to reliably predict annual nursing salaries among the larger group of nursing homes across the state. ***
 
 
 ***Objective 2: Fit a logistic regression model with rural vs. non-rural status as the response using the available financial characteristics. ***
-
-The proposal should be no longer than 6 pages. The proposal will be graded on a pass / fail basis. The proposal will be evaluated on the following:
-
-• The appropriateness of the data set.
-– The instructor should be able to access the data set easily.
-– The data set should be formatted in a manner where each row represents an observation, and each column represents a variable.
-– Please note that regression methods assume the observations are independent. One way of assessing whether your observations are independent is to ask if the order of the rows in your dataframe matters. If you can scramble the order of the rows without affecting any structure in your data, then your observations are likely to be independent. If scrambling the rows upends the structure of the dataframe, then your observations are not independent, and regression methods are not meant to handle dependent data.
-– For the categorical response variable, be sure it is binary. We have not covered enough material to tackle categorical response variables with more than 2 classes.
-
-• The objectives are appropriate for a project that spans 4 weeks. The instructor will assess if you have at least one question involving linear regression and at least one question involving logistic regression.
-
-Feedback will be provided for group proposals that are rejected. Groups will have the option of submitting one revised proposal (but given the relatively short time you have to complete the project, this should be avoided).
-
-Submission
-Please submit your group’s proposal (.pdf file) via Assignments (1 upload per group).
-
-
 
 
