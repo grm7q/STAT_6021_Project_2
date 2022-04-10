@@ -57,6 +57,7 @@ Saving a file containing the data, as a .csv file.
 #write.csv(Data, "Nursing.csv")
 
 Data <- read.csv("Nursing.csv")
+Data <- subset(Data, select = -c(X)) #remove column X
 ```
 
 Showing the first few entries of the dataset: 
@@ -81,7 +82,15 @@ head(Data)
 
 • Some data visualizations and commentary related to the project objectives/goals. 
 
-Nursing home salaries by Annual facilities expenditure (in hundreds of dollars) and Nursing home size (by number of beds):
+Based on the scatter plots and correlation table, it appears that Nurse Salaries has a moderate correlation with Beds, All Patient Days, and Patient Revenue. There also appears to be a strong linear relationship between Beds and AllPatientDays, Beds and Patient Revenue, In Patient Days and All Patient Days, In Patient Days and Patient Revenue, and All Patient Days and Patient Revenue. Further analysis is needed to determine if there is multicollinearity among the predictors. 
+
+```{r}
+pairs(~ NurseSalaries + Beds + InPatientDays + AllPatientDays + PatientRevenue + FacilitiesExpend, data = Data, lower.panel = NULL)
+cor(Data[1:6])
+```
+
+Nursing home salaries by Annual facilities expenditure (in hundreds of dollars) and Nursing home size (by number of beds): 
+There appears to be a weak correlation between annual facility expenditure and average nurse salary. It also appears that facilities with more beds tend to have a higher expenditure and a higher average nurse salary.  
 
 ```{r}
 
@@ -93,17 +102,20 @@ Data %>%
 ```
 
 
-Nursing home salaries by census in Annual total patient days (in hundreds) and Nursing home size (by number of beds):
+Nursing home salaries by census in Annual total patient days (in hundreds) and Nursing home size (by number of beds): 
+There appears to be a moderately strong correlation between annual total patient days and average nurse salary. In addition, it also appears that facilities with higher total patient days tend to have a higher annual patient care revenue and a higher average nurse salary.
 
 ```{r}
 Data %>%
   ggplot(aes(x=AllPatientDays, y = NurseSalaries, size = PatientRevenue)) +
   geom_point(alpha = 0.4) +
-  labs(x="Annual total patient days (hundreds $)", y="Average Nurse Salary (hundreds $)", title = "Nursing Home Nurse Salaries") +
+  labs(x="Annual total patient days (hundreds)", y="Average Nurse Salary (hundreds $)", title = "Nursing Home Nurse Salaries") +
   guides(size = guide_legend(title = "Annual patient \ncare revenue\n (hundreds $)"))
 ```
 
+
 Boxplot demonstrating differences in Institutional nurse's salaries in New Mexico for Rural Areas compared with Non-Rural: 
+Based on the box plot, it appears there is a greater variability for non-rural nurse salary. The nurses in non-rural regions also have a higher median salary. 
 
 ```{r}
 Data$Rural <- factor(Data$Rural)
@@ -115,7 +127,14 @@ ggplot(aes(x=Rural, y=NurseSalaries))+
   labs(x="", y="Nurse Salary", title = "Nursing Home Nurse Salaries (hundreds $)") 
 
 ```
-
+Scatter plot of Patient Revenue versus Nurse Salaries: 
+The slopes are not parallel, which indicates there is an interaction effect between Patient Revenue and Nurse Salaries.
+```{r}
+ggplot(Data,aes(x=PatientRevenue,y=NurseSalaries,color=Rural))+
+  geom_point()+
+  geom_smooth(method ="lm", se=FALSE)+
+  labs(x="PatientRevenue",y="NurseSalaries",title="PatientRevenue versus NurseSalaries")
+```
 
 ***Objectives:***
 
