@@ -64,7 +64,7 @@ Showing the first few entries of the dataset:
 
 ```{r}
 
-head(Data)
+head(Data,1)
 
 
 ```
