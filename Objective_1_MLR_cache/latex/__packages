@@ -1,0 +1,17 @@
+mvtnorm
+survival
+MASS
+TH.data
+multcomp
+lawstat
+leaps
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+Stat2Data

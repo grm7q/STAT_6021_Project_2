@@ -1,0 +1,78 @@
+---
+title: "Greg Extra Code"
+output: html_notebook
+---
+
+Since this is a relatively small dataset (52 observations) and  time is not an issue, we decided to perform all possible first order regressions using the regsubsets() function from the leaps package.
+
+
+```{r}
+allreg<-regsubsets(NurseSalaries~.,data=Data,nbest=1)
+summary(allreg)
+
+```
+
+```{r}
+full <- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + Rural + Beds + InPatientDays + AllPatientDays, data = Data)
+summary(full)
+```
+
+Finding the best model from above based on the following penalized fit criteria: highest adjusted R squared, Mallow's Cp, and BIC. Interestingly, the model with all 6 predictors has the highest adjusted R squared but the 3 predictor model #3 above (PatientRevenue, FacilitiesExpend, Rural), has the best Cp and BIC. 
+
+```{r}
+#adjusted R squared
+which.max(summary(allreg)$adjr2)
+#Mallow’s Cp
+which.min(summary(allreg)$cp)
+#BIC
+which.min(summary(allreg)$bic)
+
+```
+
+Next, we fitted a reduced model and performed a Partial F Test to see if 3 of the predictors can be dropped. Notably, it also makes sense that we can likely drop beds because of the aforementioned correlation seen between Beds and Patient Revenue.
+
+Beds + InPatientDays + AllPatientDays
+
+
+***$\beta_1:$ denotes coefficients to be kept in the reduced model***
+
+***$\beta_2:$ denotes coefficients to be dropped ***
+
+***$H_0:\ \beta_2=0$***
+
+***$H_a:\ \beta_2\neq0$ (at least one of the coefficients to be dropped is nonzero)***
+
+***P value for the Partial F test is >0.05 so we cannot reject the null hypothesis that all of the dropped coefficients are equal to zero. Therefore, we don't have sufficient evidence for going with the full model and favor the reduced model. ***
+
+
+```{r}
+
+reduced <- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + Rural, data = Data)
+anova(reduced,full)
+
+```
+
+
+
+
+
+
+
+
+
+Re-running regsbubsets on dataset without only small (<200 bed) rural facilities (excluding observation #26). 
+```{r}
+allreg2<-regsubsets(NurseSalaries~.,data=Data.small.rural,nbest=1)
+summary(allreg2)
+
+```
+
+
+```{r}
+#adjusted R squared
+which.max(summary(allreg2)$adjr2)
+#Mallow’s Cp
+which.min(summary(allreg2)$cp)
+#BIC
+which.min(summary(allreg2)$bic)
+```
