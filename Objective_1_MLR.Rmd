@@ -217,7 +217,7 @@ summary(reduced3)
 ```
 
 
-This new model might be able to explain 56% of the variability in the new observations (as long as they are not rural facilities >200 beds). The R2 is 0.4939. Both values are fairly close to each other, so overfitting is not a major concern.
+This new model might be able to explain 58.18% of the variability in the new observations (as long as they are not rural facilities >200 beds). The R2 is 0.6457. Both values are fairly close to each other, so overfitting is not a major concern.
 
 ```{r}
 reduced3 <- lm(NurseSalaries ~ PatientRevenue + Rural, data = Data.small.rural)
