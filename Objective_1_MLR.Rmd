@@ -217,7 +217,50 @@ summary(reduced3)
 ```
 
 
-This new model might be able to explain 58.18% of the variability in the new observations (as long as they are not rural facilities >200 beds). The R2 is 0.6457. Both values are fairly close to each other, so overfitting is not a major concern.
+
+Checking other assumptions: 
+
+***Assumptions 1/2 appear to be met: Mean of Errors = 0, constant variance. ***
+
+```{r}
+
+#storing fitted y residuals
+yhat <- reduced3$fitted.values
+res <- reduced3$residuals
+#add to data frame
+
+Data.small.rural <-data.frame(Data.small.rural,yhat,res)
+
+#residual plot
+Data.small.rural %>%
+  ggplot(aes(x=yhat,y=res)) +
+  geom_point() +
+  geom_hline(yintercept=0,color="red")+
+  labs(x="fitted y", y = "residuals", title="residual plot")
+```
+
+***ACF Plot: no autocorrelation seen.***
+
+```{r}
+acf(res,main="ACF Plot of Residuals")
+
+```
+
+***Errors are fairly normally distributed.***
+
+```{r}
+qqnorm(res)
+qqline(res,col="red")
+```
+
+Using boxcox method, we see that 1 lies within the 95% CI for lambda so we do not need to transform the y variable. 
+
+```{r}
+boxcox(reduced3)
+```
+
+
+Calculating the $R^2_{prediction}$, the final model might be able to explain 58.18% of the variability in the new observations (as long as they are not rural facilities >200 beds). The R2 is 0.6457. Both values are fairly close to each other, so overfitting is not a major concern.
 
 ```{r}
 reduced3 <- lm(NurseSalaries ~ PatientRevenue + Rural, data = Data.small.rural)
