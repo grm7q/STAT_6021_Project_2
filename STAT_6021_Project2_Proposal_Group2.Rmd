@@ -99,6 +99,7 @@ Data %>%
   geom_point(alpha = 0.4) +
   labs(x="Facility Expenditure (hundreds $)", y="Average Nurse Salary", title = "Nursing Home Nurse Salaries (hundreds $)") +
   guides(size = guide_legend(title = "# Nursing Home Beds"))
+
 ```
 
 
@@ -111,6 +112,7 @@ Data %>%
   geom_point(alpha = 0.4) +
   labs(x="Annual total patient days (hundreds)", y="Average Nurse Salary (hundreds $)", title = "Nursing Home Nurse Salaries") +
   guides(size = guide_legend(title = "Annual patient \ncare revenue\n (hundreds $)"))
+
 ```
 
 

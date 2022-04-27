@@ -1,0 +1,294 @@
+---
+title: "Group 2: Objective 1 Multiple Linear Regression"
+author: "Greg Madden"
+date: '2022-04-19'
+output: pdf_document
+---
+
+***Group 2 Members:***
+Gregory Madden
+Christina Kuang
+Chi Do
+Trey Hamilton
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, cache =TRUE)
+library(multcomp)
+library(lawstat)
+library(leaps)
+library(tidyverse)
+library(Stat2Data)
+#turning off scientific notation
+options(scipen = 99999999) 
+
+#reading in data
+Data <- read.csv("Nursing.csv")
+Data <- subset(Data, select = -c(X)) #remove column X
+
+Data$Rural <- factor(Data$Rural)
+levels(Data$Rural) <- c("Non-Rural", "Rural")
+#glimpse(Data)
+#contrasts(Data$Rural)
+```
+
+
+##***Question 1.*** What characteristics of nursing homes in New Mexico dictate annual nurse salaries at those institutions? 
+
+***Practical implications of a linear model for predicting cumulative annual nurse salaries for a given nursing home could be used by policymakers to rationally distribute subsidy funds to institutions that are expected to contribute the lowest salaries to a particular area.***
+
+***Objective 1: Fit a multiple linear regression model with cumulative annual nurse salaries for individual nursing homes using the available financial characteristics for each institution. The goal is to develop a model using these available data to reliably predict institutions with low annual nursing salaries among the larger group of nursing homes across the state. ***
+
+##Exploratory Data Analysis: 
+
+
+Based on the scatter plots and correlation table, it appears that Nurse Salaries has a moderate correlation with Beds, All Patient Days, and Patient Revenue. There also appears to be a strong linear relationship between Beds and AllPatientDays, Beds and Patient Revenue, In Patient Days and All Patient Days, In Patient Days and Patient Revenue, and All Patient Days and Patient Revenue. Further analysis is needed to determine if there is multicollinearity among the predictors. 
+
+```{r}
+cor(Data[1:6])
+```
+
+```{r}
+pairs(~ NurseSalaries + PatientRevenue + FacilitiesExpend + Beds + InPatientDays + AllPatientDays, data = Data, lower.panel = NULL)
+```
+
+
+Scatter plot of Patient Revenue versus Nurse Salaries: 
+The slopes are not parallel, which indicates there is an interaction effect between Patient Revenue and Nurse Salaries.
+
+```{r}
+ggplot(Data,aes(x=PatientRevenue,y=NurseSalaries,color=Rural))+
+  geom_point()+
+  geom_smooth(method ="lm", se=FALSE)+
+  labs(x="PatientRevenue",y="NurseSalaries",title="PatientRevenue versus NurseSalaries")
+```
+
+Nursing home salaries by census in Annual total patient days (in hundreds) and Nursing home size (by number of beds). There appears to be a moderately strong correlation between annual total patient days and average nurse salary, with at least one apparent outlier in terms of high patient days and low salary. 
+
+```{r}
+Data %>%
+  ggplot(aes(x=AllPatientDays, y = NurseSalaries, size = PatientRevenue)) +
+  geom_point(alpha = 0.4) +
+  labs(x="Annual total patient days (hundreds)", y="Average Nurse Salary (hundreds $)", title = "Nursing Home Nurse Salaries") +
+  guides(size = guide_legend(title = "Annual patient \ncare revenue\n (hundreds $)"))
+```
+
+Boxplot demonstrating differences in Institutional nurse's salaries in New Mexico for Rural Areas compared with Non-Rural: 
+Based on the box plot, it appears there is a greater variability for non-rural nurse salary. The nurses in non-rural regions also have a higher median salary. 
+
+```{r}
+Data$Rural <- factor(Data$Rural)
+levels(Data$Rural) <- c("Non-Rural", "Rural")
+
+Data %>%
+ggplot(aes(x=Rural, y=NurseSalaries))+
+  geom_boxplot()+
+  labs(x="", y="Nurse Salary", title = "Nursing Home Nurse Salaries (hundreds $)") 
+```
+
+
+##Carrying out automated search procedures: 
+
+Using backward selection to find the best model according to AIC. Start with the first-order model with all the predictors.
+
+***The model selected is:  NurseSalaries ~ PatientRevenue + FacilitiesExpend + 
+    Rural***
+
+```{r}
+#intercept only
+regnull <- lm(NurseSalaries~1,data=Data)
+#full
+regfull <- lm(NurseSalaries~.,data=Data)
+#backward elimination 
+step(regfull, scope=list(lower=regnull,upper=regfull),direction="backward")
+```
+
+
+Reduced model summary
+
+```{r}
+reduced <- lm(NurseSalaries~PatientRevenue + FacilitiesExpend + 
+    Rural,data=Data)
+summary(reduced)
+```
+
+
+Partial residual plot for PatientRevenue
+
+Since the plots are evenly scattered across the regression line, PatientRevenue should be added as a linear term. 
+```{r}
+##Create partial regression plot for passing yards, x2, to see if a non linear terms should be used. 
+result.y.PatientRevenue<-lm(NurseSalaries ~ FacilitiesExpend + Rural, data = Data) ##fit y against other predictors
+result.PatientRevenue<-lm(PatientRevenue ~ FacilitiesExpend + Rural, data = Data) ##fit PatientRevenue against other predictors
+res.y.PatientRevenue<-result.y.PatientRevenue$residuals #store the residuals. info in y not explained by PatientRevenue
+res.PatientRevenue<-result.PatientRevenue$residuals ##store residuals. info in PatientRevenue not explained by rest of predictors
+
+#partial regression plot for x2
+#creating regression line
+regPatientRevenue = lm(PatientRevenue~FacilitiesExpend + Rural,Data)
+regyPatientRevenue = lm(NurseSalaries~FacilitiesExpend + Rural,Data)
+
+plot(res.PatientRevenue, res.y.PatientRevenue, main = "Partial Regression Plot of PatientRevenue")
+lmx2 = lm(regyPatientRevenue$residuals ~ regPatientRevenue$residuals)
+abline(lmx2)
+#abline(h=0)
+
+```
+Partial residual plot for FacilitiesExpend
+
+Since the plots are evenly scattered across the regression line, FacilitiesExpend should be added as a linear term. 
+```{r}
+##Create partial regression plot for passing yards, x2, to see if a non linear terms should be used. 
+result.y.FacilitiesExpend<-lm(NurseSalaries ~ PatientRevenue + Rural, data = Data) ##fit y against other predictors
+result.FacilitiesExpend<-lm(FacilitiesExpend ~ PatientRevenue + Rural, data = Data) ##fit FacilitiesExpend against other predictors
+res.y.FacilitiesExpend<-result.y.FacilitiesExpend$residuals #store the residuals. info in y not explained by FacilitiesExpend
+res.FacilitiesExpend<-result.FacilitiesExpend$residuals ##store residuals. info in FacilitiesExpend not explained by rest of predictors
+
+#partial regression plot for x2
+#creating regression line
+regFacilitiesExpend = lm(FacilitiesExpend~PatientRevenue + Rural,Data)
+regyFacilitiesExpend = lm(NurseSalaries~PatientRevenue + Rural,Data)
+#plot
+plot(res.FacilitiesExpend, res.y.FacilitiesExpend, main = "Partial Regression Plot of FacilitiesExpend")
+lmx2 = lm(regyFacilitiesExpend$residuals ~ regFacilitiesExpend$residuals)
+abline(lmx2)
+```
+
+
+Since we will be using this model to predict nursing salaries for new data, we are interested in the $R^2_{prediction}$.
+
+The PRESS Statistic is 100651740. The model might be able to explain 28.335% of the variability in the new observations (not great). The R2 is 0.4939. Both values are fairly close to each other, so overfitting is not a major concern.
+
+```{r}
+#function to calculate PRESS Statistic
+PRESS <- function(model) {
+  ## get the residuals from the linear.model.
+## extract hat from lm.influence to obtain the leverages
+    i <- residuals(model)/(1 - lm.influence(model)$hat)
+  ## calculate the PRESS by squaring each term and adding them up
+    sum(i^2)
+}
+#summary(lm.y)
+PRESS(reduced)
+##Find SST
+anova_result<-anova(reduced) 
+SST<-sum(anova_result$"Sum Sq") 
+##R2 pred 
+Rsq_pred <-1-PRESS(reduced)/SST 
+Rsq_pred
+```
+
+Identifying outlying observations. 
+
+***Observation #26 is outlying.***
+
+```{r}
+##externally studentized residuals, t_i
+ext.student.res<-rstudent(reduced) 
+##identify outliers with t_i##
+##critical value using Bonferroni procedure
+n<-dim(Data)[1]
+#p is the number of predictors + 1 for the intercept
+p<-4
+crit<-qt(1-0.05/(2*n), n-1-p)
+##identify
+ext.student.res[abs(ext.student.res)>crit]
+```
+
+Identifying observations that have high leverage. 
+
+Calculating the leverage values $h_{ii}$ below and identifying ones that are >2*p/n.
+
+***Observations 26 and 31 have high leverage: ***
+
+```{r}
+lev <-lm.influence(reduced)$hat
+lev[lev>2*p/n]
+```
+
+
+Unfortunately, this dataset nor the primary reference [Smith et al. "A Comparison of Financial Performance, Organizational Characteristics, and Management Strategy Among Rural and Urban Nursing Facilities," Journal of Rural Health, 1992, pp 27-40.] do not provide identifying information for individual Nursing Home facilities, so we cannot make specific conclusions about the facility for observation #26. What we can say about observation 26 is that it is a relatively large facility with 221 beds, especially among other rural facilities. For example, the number of beds for this facility is 79% higher than the next largest rural nursing home (123 beds). Also, despite very high patient revenue and Patient census, the nurses salary is the lowest of the entire dataset. Therefore, we suspect this facility may not be comparable with other institutions, perhaps owing to it's unique combination of large facility and rural classification. Since our primary objective is to identify low nursing salaries particularly in rural areas, we proposed re-running the regression while excluding observation #26 on the basis that is is an extraordinarily large (>200 beds) rural facility. Future predictions for such institutions will not be made using this model unless rural facilities are under 200 beds. Separate policy considerations will then be made for rare large/rural institutions.
+
+```{r}
+Data.small.rural <- Data[-26,]
+reduced2 <- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + 
+    Rural, data = Data.small.rural)
+summary(reduced2)
+```
+
+Based on the t-test above, we will drop FacilitesExpend.
+
+```{r}
+reduced3 <- lm(NurseSalaries ~ PatientRevenue + Rural, data = Data.small.rural)
+summary(reduced3)
+```
+
+
+
+Checking other assumptions: 
+
+***Assumptions 1/2 appear to be met: Mean of Errors = 0, constant variance. ***
+
+```{r}
+
+#storing fitted y residuals
+yhat <- reduced3$fitted.values
+res <- reduced3$residuals
+#add to data frame
+
+Data.small.rural <-data.frame(Data.small.rural,yhat,res)
+
+#residual plot
+Data.small.rural %>%
+  ggplot(aes(x=yhat,y=res)) +
+  geom_point() +
+  geom_hline(yintercept=0,color="red")+
+  labs(x="fitted y", y = "residuals", title="residual plot")
+```
+
+***ACF Plot: no autocorrelation seen.***
+
+```{r}
+acf(res,main="ACF Plot of Residuals")
+
+```
+
+***Errors are fairly normally distributed.***
+
+```{r}
+qqnorm(res)
+qqline(res,col="red")
+```
+
+Using boxcox method, we see that 1 lies within the 95% CI for lambda so we do not need to transform the y variable. 
+
+```{r}
+boxcox(reduced3)
+```
+
+
+Calculating the $R^2_{prediction}$, the final model might be able to explain 58.18% of the variability in the new observations (as long as they are not rural facilities >200 beds). The R2 is 0.6457. Both values are fairly close to each other, so overfitting is not a major concern.
+
+```{r}
+reduced3 <- lm(NurseSalaries ~ PatientRevenue + Rural, data = Data.small.rural)
+PRESS(reduced3)
+##Find SST
+anova_result<-anova(reduced3) 
+SST<-sum(anova_result$"Sum Sq") 
+##R2 pred 
+Rsq_pred <-1-PRESS(reduced3)/SST 
+Rsq_pred
+```
+
+So, our final regression equation is: 
+
+$\hat{y}=1764.75448+0.18397*PatientRevenue(hundreds\ of\ \$)-676.94337*Rural$
+
+***Where bed size for rural institutions is <200, $\hat{y}$=Predicted Nursing Salary $(in\ hundreds\ of\ \$)$, Rural Nursing Home = 1, and Non-Rural = 0.***
+
+
+\underline{Conclusions:} 
+
+-Patient revenue and rural versus non-rural status appear to be the most important factors in determining nursing salaries. 
+-Based on the $R^2_{prediction}$, our final model summarized above might be able to explain 58.18% of the variability in nursing salaries, as long as they are not rural facilities >200 beds. 
+-The above model suggests that while holding patient revenue constant, rural nursing homes pay their nurses in total $67,694 less per year. 
+
