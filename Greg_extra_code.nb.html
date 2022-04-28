@@ -1765,19 +1765,50 @@ is not an issue, we decided to perform all possible first order
 regressions using the regsubsets() function from the leaps package.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWxscmVnPC1yZWdzdWJzZXRzKE51cnNlU2FsYXJpZXN+LixkYXRhPURhdGEsbmJlc3Q9MSlcbnN1bW1hcnkoYWxscmVnKVxuXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWxscmVnPC1yZWdzdWJzZXRzKE51cnNlU2FsYXJpZXN+LixkYXRhPURhdGEsbmJlc3Q9MSlcbnN1bW1hcnkoYWxscmVnKVxuYGBgIn0= -->
 <pre class="r"><code>allreg&lt;-regsubsets(NurseSalaries~.,data=Data,nbest=1)
-summary(allreg)
-</code></pre>
+summary(allreg)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiU3Vic2V0IHNlbGVjdGlvbiBvYmplY3RcbkNhbGw6IHJlZ3N1YnNldHMuZm9ybXVsYShOdXJzZVNhbGFyaWVzIH4gLiwgZGF0YSA9IERhdGEsIG5iZXN0ID0gMSlcbjYgVmFyaWFibGVzICAoYW5kIGludGVyY2VwdClcbiAgICAgICAgICAgICAgICAgRm9yY2VkIGluIEZvcmNlZCBvdXRcbkJlZHMgICAgICAgICAgICAgICAgIEZBTFNFICAgICAgRkFMU0VcbkluUGF0aWVudERheXMgICAgICAgIEZBTFNFICAgICAgRkFMU0VcbkFsbFBhdGllbnREYXlzICAgICAgIEZBTFNFICAgICAgRkFMU0VcblBhdGllbnRSZXZlbnVlICAgICAgIEZBTFNFICAgICAgRkFMU0VcbkZhY2lsaXRpZXNFeHBlbmQgICAgIEZBTFNFICAgICAgRkFMU0VcblJ1cmFsUnVyYWwgICAgICAgICAgIEZBTFNFICAgICAgRkFMU0VcbjEgc3Vic2V0cyBvZiBlYWNoIHNpemUgdXAgdG8gNlxuU2VsZWN0aW9uIEFsZ29yaXRobTogZXhoYXVzdGl2ZVxuICAgICAgICAgQmVkcyBJblBhdGllbnREYXlzIEFsbFBhdGllbnREYXlzIFBhdGllbnRSZXZlbnVlIEZhY2lsaXRpZXNFeHBlbmQgUnVyYWxSdXJhbFxuMSAgKCAxICkgXCIgXCIgIFwiIFwiICAgICAgICAgICBcIiBcIiAgICAgICAgICAgIFwiKlwiICAgICAgICAgICAgXCIgXCIgICAgICAgICAgICAgIFwiIFwiICAgICAgIFxuMiAgKCAxICkgXCIgXCIgIFwiIFwiICAgICAgICAgICBcIiBcIiAgICAgICAgICAgIFwiKlwiICAgICAgICAgICAgXCIgXCIgICAgICAgICAgICAgIFwiKlwiICAgICAgIFxuMyAgKCAxICkgXCIgXCIgIFwiIFwiICAgICAgICAgICBcIiBcIiAgICAgICAgICAgIFwiKlwiICAgICAgICAgICAgXCIqXCIgICAgICAgICAgICAgIFwiKlwiICAgICAgIFxuNCAgKCAxICkgXCIgXCIgIFwiKlwiICAgICAgICAgICBcIiBcIiAgICAgICAgICAgIFwiKlwiICAgICAgICAgICAgXCIqXCIgICAgICAgICAgICAgIFwiKlwiICAgICAgIFxuNSAgKCAxICkgXCIgXCIgIFwiKlwiICAgICAgICAgICBcIipcIiAgICAgICAgICAgIFwiKlwiICAgICAgICAgICAgXCIqXCIgICAgICAgICAgICAgIFwiKlwiICAgICAgIFxuNiAgKCAxICkgXCIqXCIgIFwiKlwiICAgICAgICAgICBcIipcIiAgICAgICAgICAgIFwiKlwiICAgICAgICAgICAgXCIqXCIgICAgICAgICAgICAgIFwiKlwiICAgICAgIFxuIn0= -->
+<pre><code>Subset selection object
+Call: regsubsets.formula(NurseSalaries ~ ., data = Data, nbest = 1)
+6 Variables  (and intercept)
+                 Forced in Forced out
+Beds                 FALSE      FALSE
+InPatientDays        FALSE      FALSE
+AllPatientDays       FALSE      FALSE
+PatientRevenue       FALSE      FALSE
+FacilitiesExpend     FALSE      FALSE
+RuralRural           FALSE      FALSE
+1 subsets of each size up to 6
+Selection Algorithm: exhaustive
+         Beds InPatientDays AllPatientDays PatientRevenue FacilitiesExpend RuralRural
+1  ( 1 ) &quot; &quot;  &quot; &quot;           &quot; &quot;            &quot;*&quot;            &quot; &quot;              &quot; &quot;       
+2  ( 1 ) &quot; &quot;  &quot; &quot;           &quot; &quot;            &quot;*&quot;            &quot; &quot;              &quot;*&quot;       
+3  ( 1 ) &quot; &quot;  &quot; &quot;           &quot; &quot;            &quot;*&quot;            &quot;*&quot;              &quot;*&quot;       
+4  ( 1 ) &quot; &quot;  &quot;*&quot;           &quot; &quot;            &quot;*&quot;            &quot;*&quot;              &quot;*&quot;       
+5  ( 1 ) &quot; &quot;  &quot;*&quot;           &quot;*&quot;            &quot;*&quot;            &quot;*&quot;              &quot;*&quot;       
+6  ( 1 ) &quot;*&quot;  &quot;*&quot;           &quot;*&quot;            &quot;*&quot;            &quot;*&quot;              &quot;*&quot;       </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZnVsbCA8LSBsbShOdXJzZVNhbGFyaWVzIH4gUGF0aWVudFJldmVudWUgKyBGYWNpbGl0aWVzRXhwZW5kICsgUnVyYWwgKyBCZWRzICsgSW5QYXRpZW50RGF5cyArIEFsbFBhdGllbnREYXlzLCBkYXRhID0gRGF0YSlcbnN1bW1hcnkoZnVsbClcbmBgYCJ9 -->
-<pre class="r"><code>full &lt;- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + Rural + Beds + InPatientDays + AllPatientDays, data = Data)
-summary(full)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVzLnN1bSA8LSBzdW1tYXJ5KGFsbHJlZylcbmRhdGEuZnJhbWUoXG4gIEFkai5SMiA9IHdoaWNoLm1heChyZXMuc3VtJGFkanIyKSxcbiAgQ1AgPSB3aGljaC5taW4ocmVzLnN1bSRjcCksXG4gIEJJQyA9IHdoaWNoLm1pbihyZXMuc3VtJGJpYylcbilcbmBgYCJ9 -->
+<pre class="r"><code>res.sum &lt;- summary(allreg)
+data.frame(
+  Adj.R2 = which.max(res.sum$adjr2),
+  CP = which.min(res.sum$cp),
+  BIC = which.min(res.sum$bic)
+)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6Mywic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMSDDlyAzXSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVF5d3JDTUJEY3BrYXhvQWgrUjRQb3hhc1BCRzhpQ2w1alc3VmFFMmtqK3ZYcXBtVEI1cFRaMloyZG5XeVhoMGwwaUFBZ2hCWXdDRGxDNFB2ZEtwNEN0QmdXQVRhNjluM2owTENlQk9qVkRZRDJIdzZidUNIbVN0NnpDc0hBV1ZteVBVdXZZanQyRlZ0c0hBcm42NFduNzViNkpXZ0htUVMrU1ZMSWlreUlqRkpwcERpVnFNWHE0MGs2K21GeXJWREViRFR1aVlQU0l3WlBaYTlJNCtUeVZMZDRNcklPN2h4b251Yi9CZnU2WFp6aVorcWNxNHlPTCtReEsxelJ4N2gxV3ZFb2MyVW9DcktWTU5wSW1vc1NYUkJUaDRQUER3TDQzd0hTQVFBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Adj.R2"],"name":[1],"type":["int"],"align":["right"]},{"label":["CP"],"name":[2],"type":["int"],"align":["right"]},{"label":["BIC"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"6","2":"3","3":"3"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Finding the best model from above based on the following penalized
@@ -1787,15 +1818,27 @@ R squared but the 3 predictor model #3 above (PatientRevenue,
 FacilitiesExpend, Rural), has the best Cp and BIC.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2FkanVzdGVkIFIgc3F1YXJlZFxud2hpY2gubWF4KHN1bW1hcnkoYWxscmVnKSRhZGpyMilcbiNNYWxsb3figJlzIENwXG53aGljaC5taW4oc3VtbWFyeShhbGxyZWcpJGNwKVxuI0JJQ1xud2hpY2gubWluKHN1bW1hcnkoYWxscmVnKSRiaWMpXG5cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2FkanVzdGVkIFIgc3F1YXJlZFxud2hpY2gubWF4KHN1bW1hcnkoYWxscmVnKSRhZGpyMilcbmBgYCJ9 -->
 <pre class="r"><code>#adjusted R squared
-which.max(summary(allreg)$adjr2)
-#Mallow’s Cp
-which.min(summary(allreg)$cp)
-#BIC
-which.min(summary(allreg)$bic)
-</code></pre>
+which.max(summary(allreg)$adjr2)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDZcbiJ9 -->
+<pre><code>[1] 6</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI01hbGxvd+KAmXMgQ3BcbndoaWNoLm1pbihzdW1tYXJ5KGFsbHJlZykkY3ApXG5gYGAifQ== -->
+<pre class="r"><code>#Mallow’s Cp
+which.min(summary(allreg)$cp)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDNcbiJ9 -->
+<pre><code>[1] 3</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0JJQ1xud2hpY2gubWluKHN1bW1hcnkoYWxscmVnKSRiaWMpXG5gYGAifQ== -->
+<pre class="r"><code>#BIC
+which.min(summary(allreg)$bic)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDNcbiJ9 -->
+<pre><code>[1] 3</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Next, we fitted a reduced model and performed a Partial F Test to see
@@ -1818,38 +1861,196 @@ equal to zero. Therefore, we don’t have sufficient evidence for going
 with the full model and favor the reduced model. </em></strong></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5yZWR1Y2VkIDwtIGxtKE51cnNlU2FsYXJpZXMgfiBQYXRpZW50UmV2ZW51ZSArIEZhY2lsaXRpZXNFeHBlbmQgKyBSdXJhbCwgZGF0YSA9IERhdGEpXG5hbm92YShyZWR1Y2VkLGZ1bGwpXG5cbmBgYCJ9 -->
-<pre class="r"><code>
-reduced &lt;- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + Rural, data = Data)
-anova(reduced,full)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZnVsbCA8LSBsbShOdXJzZVNhbGFyaWVzIH4gUGF0aWVudFJldmVudWUgKyBGYWNpbGl0aWVzRXhwZW5kICsgUnVyYWwgLCBkYXRhID0gRGF0YSlcbnJlZHVjZWQgPC0gbG0oTnVyc2VTYWxhcmllcyB+IFBhdGllbnRSZXZlbnVlICsgUnVyYWwsIGRhdGEgPSBEYXRhKVxuYW5vdmEocmVkdWNlZCxmdWxsKVxuYGBgIn0= -->
+<pre class="r"><code>full &lt;- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + Rural , data = Data)
+reduced &lt;- lm(NurseSalaries ~ PatientRevenue + Rural, data = Data)
+anova(reduced,full)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQW5hbHlzaXMgb2YgVmFyaWFuY2UgVGFibGVcblxuTW9kZWwgMTogTnVyc2VTYWxhcmllcyB+IFBhdGllbnRSZXZlbnVlICsgUnVyYWxcbk1vZGVsIDI6IE51cnNlU2FsYXJpZXMgfiBQYXRpZW50UmV2ZW51ZSArIEZhY2lsaXRpZXNFeHBlbmQgKyBSdXJhbFxuICBSZXMuRGYgICAgICBSU1MgRGYgU3VtIG9mIFNxICAgICAgRiAgUHIoPkYpICBcbjEgICAgIDQ5IDc3ODY3NzExICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4yICAgICA0OCA3MTA4NzA3NCAgMSAgIDY3ODA2MzYgNC41Nzg1IDAuMDM3NDkgKlxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG4ifQ== -->
+<pre><code>Analysis of Variance Table
+
+Model 1: NurseSalaries ~ PatientRevenue + Rural
+Model 2: NurseSalaries ~ PatientRevenue + FacilitiesExpend + Rural
+  Res.Df      RSS Df Sum of Sq      F  Pr(&gt;F)  
+1     49 77867711                              
+2     48 71087074  1   6780636 4.5785 0.03749 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Re-running regsbubsets on dataset without only small (&lt;200 bed)
 rural facilities (excluding observation #26).</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWxscmVnMjwtcmVnc3Vic2V0cyhOdXJzZVNhbGFyaWVzfi4sZGF0YT1EYXRhLnNtYWxsLnJ1cmFsLG5iZXN0PTEpXG5zdW1tYXJ5KGFsbHJlZzIpXG5cbmBgYCJ9 -->
-<pre class="r"><code>allreg2&lt;-regsubsets(NurseSalaries~.,data=Data.small.rural,nbest=1)
-summary(allreg2)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWxscmVnMjwtcmVnc3Vic2V0cyhOdXJzZVNhbGFyaWVzfi4sZGF0YT1EYXRhLnNtYWxsLnJ1cmFsLG5iZXN0PTEpXG5gYGAifQ== -->
+<pre class="r"><code>allreg2&lt;-regsubsets(NurseSalaries~.,data=Data.small.rural,nbest=1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZyBpbiBsZWFwcy5zZXR1cCh4LCB5LCB3dCA9IHd0LCBuYmVzdCA9IG5iZXN0LCBudm1heCA9IG52bWF4LCBmb3JjZS5pbiA9IGZvcmNlLmluLCAgOlxuICAxICBsaW5lYXIgZGVwZW5kZW5jaWVzIGZvdW5kXG4ifQ== -->
+<pre><code>Warning in leaps.setup(x, y, wt = wt, nbest = nbest, nvmax = nvmax, force.in = force.in,  :
+  1  linear dependencies found</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUmVvcmRlcmluZyB2YXJpYWJsZXMgYW5kIHRyeWluZyBhZ2FpbjpcbiJ9 -->
+<pre><code>Reordering variables and trying again:</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShhbGxyZWcyKVxuYGBgIn0= -->
+<pre class="r"><code>summary(allreg2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiU3Vic2V0IHNlbGVjdGlvbiBvYmplY3RcbkNhbGw6IHJlZ3N1YnNldHMuZm9ybXVsYShOdXJzZVNhbGFyaWVzIH4gLiwgZGF0YSA9IERhdGEuc21hbGwucnVyYWwsIFxuICAgIG5iZXN0ID0gMSlcbjggVmFyaWFibGVzICAoYW5kIGludGVyY2VwdClcbiAgICAgICAgICAgICAgICAgRm9yY2VkIGluIEZvcmNlZCBvdXRcbkJlZHMgICAgICAgICAgICAgICAgIEZBTFNFICAgICAgRkFMU0VcbkluUGF0aWVudERheXMgICAgICAgIEZBTFNFICAgICAgRkFMU0VcbkFsbFBhdGllbnREYXlzICAgICAgIEZBTFNFICAgICAgRkFMU0VcblBhdGllbnRSZXZlbnVlICAgICAgIEZBTFNFICAgICAgRkFMU0VcbkZhY2lsaXRpZXNFeHBlbmQgICAgIEZBTFNFICAgICAgRkFMU0VcblJ1cmFsUnVyYWwgICAgICAgICAgIEZBTFNFICAgICAgRkFMU0VcbnJlcyAgICAgICAgICAgICAgICAgIEZBTFNFICAgICAgRkFMU0VcbnloYXQgICAgICAgICAgICAgICAgIEZBTFNFICAgICAgRkFMU0VcbjEgc3Vic2V0cyBvZiBlYWNoIHNpemUgdXAgdG8gN1xuU2VsZWN0aW9uIEFsZ29yaXRobTogZXhoYXVzdGl2ZVxuICAgICAgICAgQmVkcyBJblBhdGllbnREYXlzIEFsbFBhdGllbnREYXlzIFBhdGllbnRSZXZlbnVlIEZhY2lsaXRpZXNFeHBlbmQgUnVyYWxSdXJhbCB5aGF0XG4xICAoIDEgKSBcIiBcIiAgXCIgXCIgICAgICAgICAgIFwiKlwiICAgICAgICAgICAgXCIgXCIgICAgICAgICAgICBcIiBcIiAgICAgICAgICAgICAgXCIgXCIgICAgICAgIFwiIFwiIFxuMiAgKCAxICkgXCIgXCIgIFwiIFwiICAgICAgICAgICBcIiBcIiAgICAgICAgICAgIFwiIFwiICAgICAgICAgICAgXCIgXCIgICAgICAgICAgICAgIFwiIFwiICAgICAgICBcIipcIiBcbjMgICggMSApIFwiIFwiICBcIipcIiAgICAgICAgICAgXCIgXCIgICAgICAgICAgICBcIiBcIiAgICAgICAgICAgIFwiIFwiICAgICAgICAgICAgICBcIiBcIiAgICAgICAgXCIqXCIgXG40ICAoIDEgKSBcIiBcIiAgXCIqXCIgICAgICAgICAgIFwiIFwiICAgICAgICAgICAgXCIqXCIgICAgICAgICAgICBcIiBcIiAgICAgICAgICAgICAgXCIgXCIgICAgICAgIFwiKlwiIFxuNSAgKCAxICkgXCIqXCIgIFwiKlwiICAgICAgICAgICBcIiBcIiAgICAgICAgICAgIFwiKlwiICAgICAgICAgICAgXCIgXCIgICAgICAgICAgICAgIFwiIFwiICAgICAgICBcIipcIiBcbjYgICggMSApIFwiKlwiICBcIipcIiAgICAgICAgICAgXCIgXCIgICAgICAgICAgICBcIiBcIiAgICAgICAgICAgIFwiKlwiICAgICAgICAgICAgICBcIipcIiAgICAgICAgXCIqXCIgXG43ICAoIDEgKSBcIipcIiAgXCIqXCIgICAgICAgICAgIFwiKlwiICAgICAgICAgICAgXCIqXCIgICAgICAgICAgICBcIipcIiAgICAgICAgICAgICAgXCIqXCIgICAgICAgIFwiIFwiIFxuICAgICAgICAgcmVzXG4xICAoIDEgKSBcIiBcIlxuMiAgKCAxICkgXCIqXCJcbjMgICggMSApIFwiKlwiXG40ICAoIDEgKSBcIipcIlxuNSAgKCAxICkgXCIqXCJcbjYgICggMSApIFwiKlwiXG43ICAoIDEgKSBcIipcIlxuIn0= -->
+<pre><code>Subset selection object
+Call: regsubsets.formula(NurseSalaries ~ ., data = Data.small.rural, 
+    nbest = 1)
+8 Variables  (and intercept)
+                 Forced in Forced out
+Beds                 FALSE      FALSE
+InPatientDays        FALSE      FALSE
+AllPatientDays       FALSE      FALSE
+PatientRevenue       FALSE      FALSE
+FacilitiesExpend     FALSE      FALSE
+RuralRural           FALSE      FALSE
+res                  FALSE      FALSE
+yhat                 FALSE      FALSE
+1 subsets of each size up to 7
+Selection Algorithm: exhaustive
+         Beds InPatientDays AllPatientDays PatientRevenue FacilitiesExpend RuralRural yhat
+1  ( 1 ) &quot; &quot;  &quot; &quot;           &quot;*&quot;            &quot; &quot;            &quot; &quot;              &quot; &quot;        &quot; &quot; 
+2  ( 1 ) &quot; &quot;  &quot; &quot;           &quot; &quot;            &quot; &quot;            &quot; &quot;              &quot; &quot;        &quot;*&quot; 
+3  ( 1 ) &quot; &quot;  &quot;*&quot;           &quot; &quot;            &quot; &quot;            &quot; &quot;              &quot; &quot;        &quot;*&quot; 
+4  ( 1 ) &quot; &quot;  &quot;*&quot;           &quot; &quot;            &quot;*&quot;            &quot; &quot;              &quot; &quot;        &quot;*&quot; 
+5  ( 1 ) &quot;*&quot;  &quot;*&quot;           &quot; &quot;            &quot;*&quot;            &quot; &quot;              &quot; &quot;        &quot;*&quot; 
+6  ( 1 ) &quot;*&quot;  &quot;*&quot;           &quot; &quot;            &quot; &quot;            &quot;*&quot;              &quot;*&quot;        &quot;*&quot; 
+7  ( 1 ) &quot;*&quot;  &quot;*&quot;           &quot;*&quot;            &quot;*&quot;            &quot;*&quot;              &quot;*&quot;        &quot; &quot; 
+         res
+1  ( 1 ) &quot; &quot;
+2  ( 1 ) &quot;*&quot;
+3  ( 1 ) &quot;*&quot;
+4  ( 1 ) &quot;*&quot;
+5  ( 1 ) &quot;*&quot;
+6  ( 1 ) &quot;*&quot;
+7  ( 1 ) &quot;*&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2FkanVzdGVkIFIgc3F1YXJlZFxud2hpY2gubWF4KHN1bW1hcnkoYWxscmVnMikkYWRqcjIpXG5gYGAifQ== -->
+<pre class="r"><code>#adjusted R squared
+which.max(summary(allreg2)$adjr2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDJcbiJ9 -->
+<pre><code>[1] 2</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI01hbGxvd+KAmXMgQ3BcbndoaWNoLm1pbihzdW1tYXJ5KGFsbHJlZzIpJGNwKVxuYGBgIn0= -->
+<pre class="r"><code>#Mallow’s Cp
+which.min(summary(allreg2)$cp)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDZcbiJ9 -->
+<pre><code>[1] 6</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0JJQ1xud2hpY2gubWluKHN1bW1hcnkoYWxscmVnMikkYmljKVxuYGBgIn0= -->
+<pre class="r"><code>#BIC
+which.min(summary(allreg2)$bic)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDRcbiJ9 -->
+<pre><code>[1] 4</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Partial residual plot for PatientRevenue</p>
+<p>Since the plots are evenly scattered across the regression line,
+PatientRevenue should be added as a linear term.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyNDcmVhdGUgcGFydGlhbCByZWdyZXNzaW9uIHBsb3QgZm9yIHBhc3NpbmcgeWFyZHMsIHgyLCB0byBzZWUgaWYgYSBub24gbGluZWFyIHRlcm1zIHNob3VsZCBiZSB1c2VkLiBcbnJlc3VsdC55LlBhdGllbnRSZXZlbnVlPC1sbShOdXJzZVNhbGFyaWVzIH4gRmFjaWxpdGllc0V4cGVuZCArIFJ1cmFsLCBkYXRhID0gRGF0YSkgIyNmaXQgeSBhZ2FpbnN0IG90aGVyIHByZWRpY3RvcnNcbnJlc3VsdC5QYXRpZW50UmV2ZW51ZTwtbG0oUGF0aWVudFJldmVudWUgfiBGYWNpbGl0aWVzRXhwZW5kICsgUnVyYWwsIGRhdGEgPSBEYXRhKSAjI2ZpdCBQYXRpZW50UmV2ZW51ZSBhZ2FpbnN0IG90aGVyIHByZWRpY3RvcnNcbnJlcy55LlBhdGllbnRSZXZlbnVlPC1yZXN1bHQueS5QYXRpZW50UmV2ZW51ZSRyZXNpZHVhbHMgI3N0b3JlIHRoZSByZXNpZHVhbHMuIGluZm8gaW4geSBub3QgZXhwbGFpbmVkIGJ5IFBhdGllbnRSZXZlbnVlXG5yZXMuUGF0aWVudFJldmVudWU8LXJlc3VsdC5QYXRpZW50UmV2ZW51ZSRyZXNpZHVhbHMgIyNzdG9yZSByZXNpZHVhbHMuIGluZm8gaW4gUGF0aWVudFJldmVudWUgbm90IGV4cGxhaW5lZCBieSByZXN0IG9mIHByZWRpY3RvcnNcblxuI3BhcnRpYWwgcmVncmVzc2lvbiBwbG90IGZvciB4MlxuI2NyZWF0aW5nIHJlZ3Jlc3Npb24gbGluZVxucmVnUGF0aWVudFJldmVudWUgPSBsbShQYXRpZW50UmV2ZW51ZX5GYWNpbGl0aWVzRXhwZW5kICsgUnVyYWwsRGF0YSlcbnJlZ3lQYXRpZW50UmV2ZW51ZSA9IGxtKE51cnNlU2FsYXJpZXN+RmFjaWxpdGllc0V4cGVuZCArIFJ1cmFsLERhdGEpXG5cbnBsb3QocmVzLlBhdGllbnRSZXZlbnVlLCByZXMueS5QYXRpZW50UmV2ZW51ZSwgbWFpbiA9IFwiUGFydGlhbCBSZWdyZXNzaW9uIFBsb3Qgb2YgUGF0aWVudFJldmVudWVcIilcbmxteDIgPSBsbShyZWd5UGF0aWVudFJldmVudWUkcmVzaWR1YWxzIH4gcmVnUGF0aWVudFJldmVudWUkcmVzaWR1YWxzKVxuYWJsaW5lKGxteDIpXG4jYWJsaW5lKGg9MClcblxuYGBgIn0= -->
+<pre class="r"><code>##Create partial regression plot for passing yards, x2, to see if a non linear terms should be used. 
+result.y.PatientRevenue&lt;-lm(NurseSalaries ~ FacilitiesExpend + Rural, data = Data) ##fit y against other predictors
+result.PatientRevenue&lt;-lm(PatientRevenue ~ FacilitiesExpend + Rural, data = Data) ##fit PatientRevenue against other predictors
+res.y.PatientRevenue&lt;-result.y.PatientRevenue$residuals #store the residuals. info in y not explained by PatientRevenue
+res.PatientRevenue&lt;-result.PatientRevenue$residuals ##store residuals. info in PatientRevenue not explained by rest of predictors
+
+#partial regression plot for x2
+#creating regression line
+regPatientRevenue = lm(PatientRevenue~FacilitiesExpend + Rural,Data)
+regyPatientRevenue = lm(NurseSalaries~FacilitiesExpend + Rural,Data)
+
+plot(res.PatientRevenue, res.y.PatientRevenue, main = &quot;Partial Regression Plot of PatientRevenue&quot;)
+lmx2 = lm(regyPatientRevenue$residuals ~ regPatientRevenue$residuals)
+abline(lmx2)
+#abline(h=0)
 </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Partial residual plot for FacilitiesExpend</p>
+<p>Since the plots are evenly scattered across the regression line,
+FacilitiesExpend should be added as a linear term.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyNDcmVhdGUgcGFydGlhbCByZWdyZXNzaW9uIHBsb3QgZm9yIHBhc3NpbmcgeWFyZHMsIHgyLCB0byBzZWUgaWYgYSBub24gbGluZWFyIHRlcm1zIHNob3VsZCBiZSB1c2VkLiBcbnJlc3VsdC55LkZhY2lsaXRpZXNFeHBlbmQ8LWxtKE51cnNlU2FsYXJpZXMgfiBQYXRpZW50UmV2ZW51ZSArIFJ1cmFsLCBkYXRhID0gRGF0YSkgIyNmaXQgeSBhZ2FpbnN0IG90aGVyIHByZWRpY3RvcnNcbnJlc3VsdC5GYWNpbGl0aWVzRXhwZW5kPC1sbShGYWNpbGl0aWVzRXhwZW5kIH4gUGF0aWVudFJldmVudWUgKyBSdXJhbCwgZGF0YSA9IERhdGEpICMjZml0IEZhY2lsaXRpZXNFeHBlbmQgYWdhaW5zdCBvdGhlciBwcmVkaWN0b3JzXG5yZXMueS5GYWNpbGl0aWVzRXhwZW5kPC1yZXN1bHQueS5GYWNpbGl0aWVzRXhwZW5kJHJlc2lkdWFscyAjc3RvcmUgdGhlIHJlc2lkdWFscy4gaW5mbyBpbiB5IG5vdCBleHBsYWluZWQgYnkgRmFjaWxpdGllc0V4cGVuZFxucmVzLkZhY2lsaXRpZXNFeHBlbmQ8LXJlc3VsdC5GYWNpbGl0aWVzRXhwZW5kJHJlc2lkdWFscyAjI3N0b3JlIHJlc2lkdWFscy4gaW5mbyBpbiBGYWNpbGl0aWVzRXhwZW5kIG5vdCBleHBsYWluZWQgYnkgcmVzdCBvZiBwcmVkaWN0b3JzXG5cbiNwYXJ0aWFsIHJlZ3Jlc3Npb24gcGxvdCBmb3IgeDJcbiNjcmVhdGluZyByZWdyZXNzaW9uIGxpbmVcbnJlZ0ZhY2lsaXRpZXNFeHBlbmQgPSBsbShGYWNpbGl0aWVzRXhwZW5kflBhdGllbnRSZXZlbnVlICsgUnVyYWwsRGF0YSlcbnJlZ3lGYWNpbGl0aWVzRXhwZW5kID0gbG0oTnVyc2VTYWxhcmllc35QYXRpZW50UmV2ZW51ZSArIFJ1cmFsLERhdGEpXG4jcGxvdFxucGxvdChyZXMuRmFjaWxpdGllc0V4cGVuZCwgcmVzLnkuRmFjaWxpdGllc0V4cGVuZCwgbWFpbiA9IFwiUGFydGlhbCBSZWdyZXNzaW9uIFBsb3Qgb2YgRmFjaWxpdGllc0V4cGVuZFwiKVxubG14MiA9IGxtKHJlZ3lGYWNpbGl0aWVzRXhwZW5kJHJlc2lkdWFscyB+IHJlZ0ZhY2lsaXRpZXNFeHBlbmQkcmVzaWR1YWxzKVxuYWJsaW5lKGxteDIpXG5gYGAifQ== -->
+<pre class="r"><code>##Create partial regression plot for passing yards, x2, to see if a non linear terms should be used. 
+result.y.FacilitiesExpend&lt;-lm(NurseSalaries ~ PatientRevenue + Rural, data = Data) ##fit y against other predictors
+result.FacilitiesExpend&lt;-lm(FacilitiesExpend ~ PatientRevenue + Rural, data = Data) ##fit FacilitiesExpend against other predictors
+res.y.FacilitiesExpend&lt;-result.y.FacilitiesExpend$residuals #store the residuals. info in y not explained by FacilitiesExpend
+res.FacilitiesExpend&lt;-result.FacilitiesExpend$residuals ##store residuals. info in FacilitiesExpend not explained by rest of predictors
+
+#partial regression plot for x2
+#creating regression line
+regFacilitiesExpend = lm(FacilitiesExpend~PatientRevenue + Rural,Data)
+regyFacilitiesExpend = lm(NurseSalaries~PatientRevenue + Rural,Data)
+#plot
+plot(res.FacilitiesExpend, res.y.FacilitiesExpend, main = &quot;Partial Regression Plot of FacilitiesExpend&quot;)
+lmx2 = lm(regyFacilitiesExpend$residuals ~ regFacilitiesExpend$residuals)
+abline(lmx2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The PRESS Statistic is 100651740. The model might be able to explain
+28.335% of the variability in the new observations (not great). The R2
+is 0.4939. Both values are fairly close to each other, so overfitting is
+not a major concern.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2Z1bmN0aW9uIHRvIGNhbGN1bGF0ZSBQUkVTUyBTdGF0aXN0aWNcblBSRVNTIDwtIGZ1bmN0aW9uKG1vZGVsKSB7XG4gICMjIGdldCB0aGUgcmVzaWR1YWxzIGZyb20gdGhlIGxpbmVhci5tb2RlbC5cbiMjIGV4dHJhY3QgaGF0IGZyb20gbG0uaW5mbHVlbmNlIHRvIG9idGFpbiB0aGUgbGV2ZXJhZ2VzXG4gICAgaSA8LSByZXNpZHVhbHMobW9kZWwpLygxIC0gbG0uaW5mbHVlbmNlKG1vZGVsKSRoYXQpXG4gICMjIGNhbGN1bGF0ZSB0aGUgUFJFU1MgYnkgc3F1YXJpbmcgZWFjaCB0ZXJtIGFuZCBhZGRpbmcgdGhlbSB1cFxuICAgIHN1bShpXjIpXG59XG4jc3VtbWFyeShsbS55KVxuUFJFU1MocmVkdWNlZClcbiMjRmluZCBTU1RcbmFub3ZhX3Jlc3VsdDwtYW5vdmEocmVkdWNlZCkgXG5TU1Q8LXN1bShhbm92YV9yZXN1bHQkXCJTdW0gU3FcIikgXG4jI1IyIHByZWQgXG5Sc3FfcHJlZCA8LTEtUFJFU1MocmVkdWNlZCkvU1NUIFxuUnNxX3ByZWRcbmBgYCJ9 -->
+<pre class="r"><code>#function to calculate PRESS Statistic
+PRESS &lt;- function(model) {
+  ## get the residuals from the linear.model.
+## extract hat from lm.influence to obtain the leverages
+    i &lt;- residuals(model)/(1 - lm.influence(model)$hat)
+  ## calculate the PRESS by squaring each term and adding them up
+    sum(i^2)
+}
+#summary(lm.y)
+PRESS(reduced)
+##Find SST
+anova_result&lt;-anova(reduced) 
+SST&lt;-sum(anova_result$&quot;Sum Sq&quot;) 
+##R2 pred 
+Rsq_pred &lt;-1-PRESS(reduced)/SST 
+Rsq_pred</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2FkanVzdGVkIFIgc3F1YXJlZFxud2hpY2gubWF4KHN1bW1hcnkoYWxscmVnMikkYWRqcjIpXG4jTWFsbG934oCZcyBDcFxud2hpY2gubWluKHN1bW1hcnkoYWxscmVnMikkY3ApXG4jQklDXG53aGljaC5taW4oc3VtbWFyeShhbGxyZWcyKSRiaWMpXG5gYGAifQ== -->
-<pre class="r"><code>#adjusted R squared
-which.max(summary(allreg2)$adjr2)
-#Mallow’s Cp
-which.min(summary(allreg2)$cp)
-#BIC
-which.min(summary(allreg2)$bic)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVkdWNlZDIgPC0gbG0oTnVyc2VTYWxhcmllcyB+IFBhdGllbnRSZXZlbnVlICsgRmFjaWxpdGllc0V4cGVuZCArIFxuICAgIFJ1cmFsLCBkYXRhID0gRGF0YS5zbWFsbC5ydXJhbClcbnN1bW1hcnkocmVkdWNlZDIpXG5gYGAifQ== -->
+<pre class="r"><code>reduced2 &lt;- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + 
+    Rural, data = Data.small.rural)
+summary(reduced2)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Based on the t-test above, we will drop FacilitesExpend.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVkdWNlZDMgPC0gbG0oTnVyc2VTYWxhcmllcyB+IFBhdGllbnRSZXZlbnVlICsgUnVyYWwsIGRhdGEgPSBEYXRhLnNtYWxsLnJ1cmFsKVxuc3VtbWFyeShyZWR1Y2VkMylcbmBgYCJ9 -->
+<pre class="r"><code>reduced3 &lt;- lm(NurseSalaries ~ PatientRevenue + Rural, data = Data.small.rural)
+summary(reduced3)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiR3JlZyBFeHRyYSBDb2RlIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgpTaW5jZSB0aGlzIGlzIGEgcmVsYXRpdmVseSBzbWFsbCBkYXRhc2V0ICg1MiBvYnNlcnZhdGlvbnMpIGFuZCAgdGltZSBpcyBub3QgYW4gaXNzdWUsIHdlIGRlY2lkZWQgdG8gcGVyZm9ybSBhbGwgcG9zc2libGUgZmlyc3Qgb3JkZXIgcmVncmVzc2lvbnMgdXNpbmcgdGhlIHJlZ3N1YnNldHMoKSBmdW5jdGlvbiBmcm9tIHRoZSBsZWFwcyBwYWNrYWdlLgoKCmBgYHtyfQphbGxyZWc8LXJlZ3N1YnNldHMoTnVyc2VTYWxhcmllc34uLGRhdGE9RGF0YSxuYmVzdD0xKQpzdW1tYXJ5KGFsbHJlZykKCmBgYAoKYGBge3J9CmZ1bGwgPC0gbG0oTnVyc2VTYWxhcmllcyB+IFBhdGllbnRSZXZlbnVlICsgRmFjaWxpdGllc0V4cGVuZCArIFJ1cmFsICsgQmVkcyArIEluUGF0aWVudERheXMgKyBBbGxQYXRpZW50RGF5cywgZGF0YSA9IERhdGEpCnN1bW1hcnkoZnVsbCkKYGBgCgpGaW5kaW5nIHRoZSBiZXN0IG1vZGVsIGZyb20gYWJvdmUgYmFzZWQgb24gdGhlIGZvbGxvd2luZyBwZW5hbGl6ZWQgZml0IGNyaXRlcmlhOiBoaWdoZXN0IGFkanVzdGVkIFIgc3F1YXJlZCwgTWFsbG93J3MgQ3AsIGFuZCBCSUMuIEludGVyZXN0aW5nbHksIHRoZSBtb2RlbCB3aXRoIGFsbCA2IHByZWRpY3RvcnMgaGFzIHRoZSBoaWdoZXN0IGFkanVzdGVkIFIgc3F1YXJlZCBidXQgdGhlIDMgcHJlZGljdG9yIG1vZGVsICMzIGFib3ZlIChQYXRpZW50UmV2ZW51ZSwgRmFjaWxpdGllc0V4cGVuZCwgUnVyYWwpLCBoYXMgdGhlIGJlc3QgQ3AgYW5kIEJJQy4gCgpgYGB7cn0KI2FkanVzdGVkIFIgc3F1YXJlZAp3aGljaC5tYXgoc3VtbWFyeShhbGxyZWcpJGFkanIyKQojTWFsbG934oCZcyBDcAp3aGljaC5taW4oc3VtbWFyeShhbGxyZWcpJGNwKQojQklDCndoaWNoLm1pbihzdW1tYXJ5KGFsbHJlZykkYmljKQoKYGBgCgpOZXh0LCB3ZSBmaXR0ZWQgYSByZWR1Y2VkIG1vZGVsIGFuZCBwZXJmb3JtZWQgYSBQYXJ0aWFsIEYgVGVzdCB0byBzZWUgaWYgMyBvZiB0aGUgcHJlZGljdG9ycyBjYW4gYmUgZHJvcHBlZC4gTm90YWJseSwgaXQgYWxzbyBtYWtlcyBzZW5zZSB0aGF0IHdlIGNhbiBsaWtlbHkgZHJvcCBiZWRzIGJlY2F1c2Ugb2YgdGhlIGFmb3JlbWVudGlvbmVkIGNvcnJlbGF0aW9uIHNlZW4gYmV0d2VlbiBCZWRzIGFuZCBQYXRpZW50IFJldmVudWUuCgpCZWRzICsgSW5QYXRpZW50RGF5cyArIEFsbFBhdGllbnREYXlzCgoKKioqJFxiZXRhXzE6JCBkZW5vdGVzIGNvZWZmaWNpZW50cyB0byBiZSBrZXB0IGluIHRoZSByZWR1Y2VkIG1vZGVsKioqCgoqKiokXGJldGFfMjokIGRlbm90ZXMgY29lZmZpY2llbnRzIHRvIGJlIGRyb3BwZWQgKioqCgoqKiokSF8wOlwgXGJldGFfMj0wJCoqKgoKKioqJEhfYTpcIFxiZXRhXzJcbmVxMCQgKGF0IGxlYXN0IG9uZSBvZiB0aGUgY29lZmZpY2llbnRzIHRvIGJlIGRyb3BwZWQgaXMgbm9uemVybykqKioKCioqKlAgdmFsdWUgZm9yIHRoZSBQYXJ0aWFsIEYgdGVzdCBpcyA+MC4wNSBzbyB3ZSBjYW5ub3QgcmVqZWN0IHRoZSBudWxsIGh5cG90aGVzaXMgdGhhdCBhbGwgb2YgdGhlIGRyb3BwZWQgY29lZmZpY2llbnRzIGFyZSBlcXVhbCB0byB6ZXJvLiBUaGVyZWZvcmUsIHdlIGRvbid0IGhhdmUgc3VmZmljaWVudCBldmlkZW5jZSBmb3IgZ29pbmcgd2l0aCB0aGUgZnVsbCBtb2RlbCBhbmQgZmF2b3IgdGhlIHJlZHVjZWQgbW9kZWwuICoqKgoKCmBgYHtyfQoKcmVkdWNlZCA8LSBsbShOdXJzZVNhbGFyaWVzIH4gUGF0aWVudFJldmVudWUgKyBGYWNpbGl0aWVzRXhwZW5kICsgUnVyYWwsIGRhdGEgPSBEYXRhKQphbm92YShyZWR1Y2VkLGZ1bGwpCgpgYGAKCgoKCgoKCgoKUmUtcnVubmluZyByZWdzYnVic2V0cyBvbiBkYXRhc2V0IHdpdGhvdXQgb25seSBzbWFsbCAoPDIwMCBiZWQpIHJ1cmFsIGZhY2lsaXRpZXMgKGV4Y2x1ZGluZyBvYnNlcnZhdGlvbiAjMjYpLiAKYGBge3J9CmFsbHJlZzI8LXJlZ3N1YnNldHMoTnVyc2VTYWxhcmllc34uLGRhdGE9RGF0YS5zbWFsbC5ydXJhbCxuYmVzdD0xKQpzdW1tYXJ5KGFsbHJlZzIpCgpgYGAKCgpgYGB7cn0KI2FkanVzdGVkIFIgc3F1YXJlZAp3aGljaC5tYXgoc3VtbWFyeShhbGxyZWcyKSRhZGpyMikKI01hbGxvd+KAmXMgQ3AKd2hpY2gubWluKHN1bW1hcnkoYWxscmVnMikkY3ApCiNCSUMKd2hpY2gubWluKHN1bW1hcnkoYWxscmVnMikkYmljKQpgYGAK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiR3JlZyBFeHRyYSBDb2RlIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgpTaW5jZSB0aGlzIGlzIGEgcmVsYXRpdmVseSBzbWFsbCBkYXRhc2V0ICg1MiBvYnNlcnZhdGlvbnMpIGFuZCAgdGltZSBpcyBub3QgYW4gaXNzdWUsIHdlIGRlY2lkZWQgdG8gcGVyZm9ybSBhbGwgcG9zc2libGUgZmlyc3Qgb3JkZXIgcmVncmVzc2lvbnMgdXNpbmcgdGhlIHJlZ3N1YnNldHMoKSBmdW5jdGlvbiBmcm9tIHRoZSBsZWFwcyBwYWNrYWdlLgoKCmBgYHtyfQphbGxyZWc8LXJlZ3N1YnNldHMoTnVyc2VTYWxhcmllc34uLGRhdGE9RGF0YSxuYmVzdD0xKQpzdW1tYXJ5KGFsbHJlZykKCmBgYAoKCgpgYGB7cn0KcmVzLnN1bSA8LSBzdW1tYXJ5KGFsbHJlZykKZGF0YS5mcmFtZSgKICBBZGouUjIgPSB3aGljaC5tYXgocmVzLnN1bSRhZGpyMiksCiAgQ1AgPSB3aGljaC5taW4ocmVzLnN1bSRjcCksCiAgQklDID0gd2hpY2gubWluKHJlcy5zdW0kYmljKQopCmBgYAoKRmluZGluZyB0aGUgYmVzdCBtb2RlbCBmcm9tIGFib3ZlIGJhc2VkIG9uIHRoZSBmb2xsb3dpbmcgcGVuYWxpemVkIGZpdCBjcml0ZXJpYTogaGlnaGVzdCBhZGp1c3RlZCBSIHNxdWFyZWQsIE1hbGxvdydzIENwLCBhbmQgQklDLiBJbnRlcmVzdGluZ2x5LCB0aGUgbW9kZWwgd2l0aCBhbGwgNiBwcmVkaWN0b3JzIGhhcyB0aGUgaGlnaGVzdCBhZGp1c3RlZCBSIHNxdWFyZWQgYnV0IHRoZSAzIHByZWRpY3RvciBtb2RlbCAjMyBhYm92ZSAoUGF0aWVudFJldmVudWUsIEZhY2lsaXRpZXNFeHBlbmQsIFJ1cmFsKSwgaGFzIHRoZSBiZXN0IENwIGFuZCBCSUMuIAoKYGBge3J9CiNhZGp1c3RlZCBSIHNxdWFyZWQKd2hpY2gubWF4KHN1bW1hcnkoYWxscmVnKSRhZGpyMikKI01hbGxvd+KAmXMgQ3AKd2hpY2gubWluKHN1bW1hcnkoYWxscmVnKSRjcCkKI0JJQwp3aGljaC5taW4oc3VtbWFyeShhbGxyZWcpJGJpYykKCmBgYAoKTmV4dCwgd2UgZml0dGVkIGEgcmVkdWNlZCBtb2RlbCBhbmQgcGVyZm9ybWVkIGEgUGFydGlhbCBGIFRlc3QgdG8gc2VlIGlmIDMgb2YgdGhlIHByZWRpY3RvcnMgY2FuIGJlIGRyb3BwZWQuIE5vdGFibHksIGl0IGFsc28gbWFrZXMgc2Vuc2UgdGhhdCB3ZSBjYW4gbGlrZWx5IGRyb3AgYmVkcyBiZWNhdXNlIG9mIHRoZSBhZm9yZW1lbnRpb25lZCBjb3JyZWxhdGlvbiBzZWVuIGJldHdlZW4gQmVkcyBhbmQgUGF0aWVudCBSZXZlbnVlLgoKQmVkcyArIEluUGF0aWVudERheXMgKyBBbGxQYXRpZW50RGF5cwoKCioqKiRcYmV0YV8xOiQgZGVub3RlcyBjb2VmZmljaWVudHMgdG8gYmUga2VwdCBpbiB0aGUgcmVkdWNlZCBtb2RlbCoqKgoKKioqJFxiZXRhXzI6JCBkZW5vdGVzIGNvZWZmaWNpZW50cyB0byBiZSBkcm9wcGVkICoqKgoKKioqJEhfMDpcIFxiZXRhXzI9MCQqKioKCioqKiRIX2E6XCBcYmV0YV8yXG5lcTAkIChhdCBsZWFzdCBvbmUgb2YgdGhlIGNvZWZmaWNpZW50cyB0byBiZSBkcm9wcGVkIGlzIG5vbnplcm8pKioqCgoqKipQIHZhbHVlIGZvciB0aGUgUGFydGlhbCBGIHRlc3QgaXMgPjAuMDUgc28gd2UgY2Fubm90IHJlamVjdCB0aGUgbnVsbCBoeXBvdGhlc2lzIHRoYXQgYWxsIG9mIHRoZSBkcm9wcGVkIGNvZWZmaWNpZW50cyBhcmUgZXF1YWwgdG8gemVyby4gVGhlcmVmb3JlLCB3ZSBkb24ndCBoYXZlIHN1ZmZpY2llbnQgZXZpZGVuY2UgZm9yIGdvaW5nIHdpdGggdGhlIGZ1bGwgbW9kZWwgYW5kIGZhdm9yIHRoZSByZWR1Y2VkIG1vZGVsLiAqKioKCgpgYGB7cn0KZnVsbCA8LSBsbShOdXJzZVNhbGFyaWVzIH4gUGF0aWVudFJldmVudWUgKyBGYWNpbGl0aWVzRXhwZW5kICsgUnVyYWwgLCBkYXRhID0gRGF0YSkKcmVkdWNlZCA8LSBsbShOdXJzZVNhbGFyaWVzIH4gUGF0aWVudFJldmVudWUgKyBSdXJhbCwgZGF0YSA9IERhdGEpCmFub3ZhKHJlZHVjZWQsZnVsbCkKCmBgYAoKClJlLXJ1bm5pbmcgcmVnc2J1YnNldHMgb24gZGF0YXNldCB3aXRob3V0IG9ubHkgc21hbGwgKDwyMDAgYmVkKSBydXJhbCBmYWNpbGl0aWVzIChleGNsdWRpbmcgb2JzZXJ2YXRpb24gIzI2KS4gCmBgYHtyfQphbGxyZWcyPC1yZWdzdWJzZXRzKE51cnNlU2FsYXJpZXN+LixkYXRhPURhdGEuc21hbGwucnVyYWwsbmJlc3Q9MSkKc3VtbWFyeShhbGxyZWcyKQoKYGBgCgoKYGBge3J9CiNhZGp1c3RlZCBSIHNxdWFyZWQKd2hpY2gubWF4KHN1bW1hcnkoYWxscmVnMikkYWRqcjIpCiNNYWxsb3figJlzIENwCndoaWNoLm1pbihzdW1tYXJ5KGFsbHJlZzIpJGNwKQojQklDCndoaWNoLm1pbihzdW1tYXJ5KGFsbHJlZzIpJGJpYykKYGBgCgoKClBhcnRpYWwgcmVzaWR1YWwgcGxvdCBmb3IgUGF0aWVudFJldmVudWUKClNpbmNlIHRoZSBwbG90cyBhcmUgZXZlbmx5IHNjYXR0ZXJlZCBhY3Jvc3MgdGhlIHJlZ3Jlc3Npb24gbGluZSwgUGF0aWVudFJldmVudWUgc2hvdWxkIGJlIGFkZGVkIGFzIGEgbGluZWFyIHRlcm0uIApgYGB7cn0KIyNDcmVhdGUgcGFydGlhbCByZWdyZXNzaW9uIHBsb3QgZm9yIHBhc3NpbmcgeWFyZHMsIHgyLCB0byBzZWUgaWYgYSBub24gbGluZWFyIHRlcm1zIHNob3VsZCBiZSB1c2VkLiAKcmVzdWx0LnkuUGF0aWVudFJldmVudWU8LWxtKE51cnNlU2FsYXJpZXMgfiBGYWNpbGl0aWVzRXhwZW5kICsgUnVyYWwsIGRhdGEgPSBEYXRhKSAjI2ZpdCB5IGFnYWluc3Qgb3RoZXIgcHJlZGljdG9ycwpyZXN1bHQuUGF0aWVudFJldmVudWU8LWxtKFBhdGllbnRSZXZlbnVlIH4gRmFjaWxpdGllc0V4cGVuZCArIFJ1cmFsLCBkYXRhID0gRGF0YSkgIyNmaXQgUGF0aWVudFJldmVudWUgYWdhaW5zdCBvdGhlciBwcmVkaWN0b3JzCnJlcy55LlBhdGllbnRSZXZlbnVlPC1yZXN1bHQueS5QYXRpZW50UmV2ZW51ZSRyZXNpZHVhbHMgI3N0b3JlIHRoZSByZXNpZHVhbHMuIGluZm8gaW4geSBub3QgZXhwbGFpbmVkIGJ5IFBhdGllbnRSZXZlbnVlCnJlcy5QYXRpZW50UmV2ZW51ZTwtcmVzdWx0LlBhdGllbnRSZXZlbnVlJHJlc2lkdWFscyAjI3N0b3JlIHJlc2lkdWFscy4gaW5mbyBpbiBQYXRpZW50UmV2ZW51ZSBub3QgZXhwbGFpbmVkIGJ5IHJlc3Qgb2YgcHJlZGljdG9ycwoKI3BhcnRpYWwgcmVncmVzc2lvbiBwbG90IGZvciB4MgojY3JlYXRpbmcgcmVncmVzc2lvbiBsaW5lCnJlZ1BhdGllbnRSZXZlbnVlID0gbG0oUGF0aWVudFJldmVudWV+RmFjaWxpdGllc0V4cGVuZCArIFJ1cmFsLERhdGEpCnJlZ3lQYXRpZW50UmV2ZW51ZSA9IGxtKE51cnNlU2FsYXJpZXN+RmFjaWxpdGllc0V4cGVuZCArIFJ1cmFsLERhdGEpCgpwbG90KHJlcy5QYXRpZW50UmV2ZW51ZSwgcmVzLnkuUGF0aWVudFJldmVudWUsIG1haW4gPSAiUGFydGlhbCBSZWdyZXNzaW9uIFBsb3Qgb2YgUGF0aWVudFJldmVudWUiKQpsbXgyID0gbG0ocmVneVBhdGllbnRSZXZlbnVlJHJlc2lkdWFscyB+IHJlZ1BhdGllbnRSZXZlbnVlJHJlc2lkdWFscykKYWJsaW5lKGxteDIpCiNhYmxpbmUoaD0wKQoKYGBgClBhcnRpYWwgcmVzaWR1YWwgcGxvdCBmb3IgRmFjaWxpdGllc0V4cGVuZAoKU2luY2UgdGhlIHBsb3RzIGFyZSBldmVubHkgc2NhdHRlcmVkIGFjcm9zcyB0aGUgcmVncmVzc2lvbiBsaW5lLCBGYWNpbGl0aWVzRXhwZW5kIHNob3VsZCBiZSBhZGRlZCBhcyBhIGxpbmVhciB0ZXJtLiAKYGBge3J9CiMjQ3JlYXRlIHBhcnRpYWwgcmVncmVzc2lvbiBwbG90IGZvciBwYXNzaW5nIHlhcmRzLCB4MiwgdG8gc2VlIGlmIGEgbm9uIGxpbmVhciB0ZXJtcyBzaG91bGQgYmUgdXNlZC4gCnJlc3VsdC55LkZhY2lsaXRpZXNFeHBlbmQ8LWxtKE51cnNlU2FsYXJpZXMgfiBQYXRpZW50UmV2ZW51ZSArIFJ1cmFsLCBkYXRhID0gRGF0YSkgIyNmaXQgeSBhZ2FpbnN0IG90aGVyIHByZWRpY3RvcnMKcmVzdWx0LkZhY2lsaXRpZXNFeHBlbmQ8LWxtKEZhY2lsaXRpZXNFeHBlbmQgfiBQYXRpZW50UmV2ZW51ZSArIFJ1cmFsLCBkYXRhID0gRGF0YSkgIyNmaXQgRmFjaWxpdGllc0V4cGVuZCBhZ2FpbnN0IG90aGVyIHByZWRpY3RvcnMKcmVzLnkuRmFjaWxpdGllc0V4cGVuZDwtcmVzdWx0LnkuRmFjaWxpdGllc0V4cGVuZCRyZXNpZHVhbHMgI3N0b3JlIHRoZSByZXNpZHVhbHMuIGluZm8gaW4geSBub3QgZXhwbGFpbmVkIGJ5IEZhY2lsaXRpZXNFeHBlbmQKcmVzLkZhY2lsaXRpZXNFeHBlbmQ8LXJlc3VsdC5GYWNpbGl0aWVzRXhwZW5kJHJlc2lkdWFscyAjI3N0b3JlIHJlc2lkdWFscy4gaW5mbyBpbiBGYWNpbGl0aWVzRXhwZW5kIG5vdCBleHBsYWluZWQgYnkgcmVzdCBvZiBwcmVkaWN0b3JzCgojcGFydGlhbCByZWdyZXNzaW9uIHBsb3QgZm9yIHgyCiNjcmVhdGluZyByZWdyZXNzaW9uIGxpbmUKcmVnRmFjaWxpdGllc0V4cGVuZCA9IGxtKEZhY2lsaXRpZXNFeHBlbmR+UGF0aWVudFJldmVudWUgKyBSdXJhbCxEYXRhKQpyZWd5RmFjaWxpdGllc0V4cGVuZCA9IGxtKE51cnNlU2FsYXJpZXN+UGF0aWVudFJldmVudWUgKyBSdXJhbCxEYXRhKQojcGxvdApwbG90KHJlcy5GYWNpbGl0aWVzRXhwZW5kLCByZXMueS5GYWNpbGl0aWVzRXhwZW5kLCBtYWluID0gIlBhcnRpYWwgUmVncmVzc2lvbiBQbG90IG9mIEZhY2lsaXRpZXNFeHBlbmQiKQpsbXgyID0gbG0ocmVneUZhY2lsaXRpZXNFeHBlbmQkcmVzaWR1YWxzIH4gcmVnRmFjaWxpdGllc0V4cGVuZCRyZXNpZHVhbHMpCmFibGluZShsbXgyKQpgYGAKCgpUaGUgUFJFU1MgU3RhdGlzdGljIGlzIDEwMDY1MTc0MC4gVGhlIG1vZGVsIG1pZ2h0IGJlIGFibGUgdG8gZXhwbGFpbiAyOC4zMzUlIG9mIHRoZSB2YXJpYWJpbGl0eSBpbiB0aGUgbmV3IG9ic2VydmF0aW9ucyAobm90IGdyZWF0KS4gVGhlIFIyIGlzIDAuNDkzOS4gQm90aCB2YWx1ZXMgYXJlIGZhaXJseSBjbG9zZSB0byBlYWNoIG90aGVyLCBzbyBvdmVyZml0dGluZyBpcyBub3QgYSBtYWpvciBjb25jZXJuLgoKYGBge3J9CiNmdW5jdGlvbiB0byBjYWxjdWxhdGUgUFJFU1MgU3RhdGlzdGljClBSRVNTIDwtIGZ1bmN0aW9uKG1vZGVsKSB7CiAgIyMgZ2V0IHRoZSByZXNpZHVhbHMgZnJvbSB0aGUgbGluZWFyLm1vZGVsLgojIyBleHRyYWN0IGhhdCBmcm9tIGxtLmluZmx1ZW5jZSB0byBvYnRhaW4gdGhlIGxldmVyYWdlcwogICAgaSA8LSByZXNpZHVhbHMobW9kZWwpLygxIC0gbG0uaW5mbHVlbmNlKG1vZGVsKSRoYXQpCiAgIyMgY2FsY3VsYXRlIHRoZSBQUkVTUyBieSBzcXVhcmluZyBlYWNoIHRlcm0gYW5kIGFkZGluZyB0aGVtIHVwCiAgICBzdW0oaV4yKQp9CiNzdW1tYXJ5KGxtLnkpClBSRVNTKHJlZHVjZWQpCiMjRmluZCBTU1QKYW5vdmFfcmVzdWx0PC1hbm92YShyZWR1Y2VkKSAKU1NUPC1zdW0oYW5vdmFfcmVzdWx0JCJTdW0gU3EiKSAKIyNSMiBwcmVkIApSc3FfcHJlZCA8LTEtUFJFU1MocmVkdWNlZCkvU1NUIApSc3FfcHJlZApgYGAKCgoKCmBgYHtyfQpyZWR1Y2VkMiA8LSBsbShOdXJzZVNhbGFyaWVzIH4gUGF0aWVudFJldmVudWUgKyBGYWNpbGl0aWVzRXhwZW5kICsgCiAgICBSdXJhbCwgZGF0YSA9IERhdGEuc21hbGwucnVyYWwpCnN1bW1hcnkocmVkdWNlZDIpCmBgYAoKCgoKQmFzZWQgb24gdGhlIHQtdGVzdCBhYm92ZSwgd2Ugd2lsbCBkcm9wIEZhY2lsaXRlc0V4cGVuZC4KCmBgYHtyfQpyZWR1Y2VkMyA8LSBsbShOdXJzZVNhbGFyaWVzIH4gUGF0aWVudFJldmVudWUgKyBSdXJhbCwgZGF0YSA9IERhdGEuc21hbGwucnVyYWwpCnN1bW1hcnkocmVkdWNlZDMpCmBgYAoKCg==</div>
 
 
 

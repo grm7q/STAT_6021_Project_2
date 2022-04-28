@@ -12,9 +12,15 @@ summary(allreg)
 
 ```
 
+
+
 ```{r}
-full <- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + Rural + Beds + InPatientDays + AllPatientDays, data = Data)
-summary(full)
+res.sum <- summary(allreg)
+data.frame(
+  Adj.R2 = which.max(res.sum$adjr2),
+  CP = which.min(res.sum$cp),
+  BIC = which.min(res.sum$bic)
+)
 ```
 
 Finding the best model from above based on the following penalized fit criteria: highest adjusted R squared, Mallow's Cp, and BIC. Interestingly, the model with all 6 predictors has the highest adjusted R squared but the 3 predictor model #3 above (PatientRevenue, FacilitiesExpend, Rural), has the best Cp and BIC. 
@@ -46,18 +52,11 @@ Beds + InPatientDays + AllPatientDays
 
 
 ```{r}
-
-reduced <- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + Rural, data = Data)
+full <- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + Rural , data = Data)
+reduced <- lm(NurseSalaries ~ PatientRevenue + Rural, data = Data)
 anova(reduced,full)
 
 ```
-
-
-
-
-
-
-
 
 
 Re-running regsbubsets on dataset without only small (<200 bed) rural facilities (excluding observation #26). 
@@ -76,3 +75,89 @@ which.min(summary(allreg2)$cp)
 #BIC
 which.min(summary(allreg2)$bic)
 ```
+
+
+
+Partial residual plot for PatientRevenue
+
+Since the plots are evenly scattered across the regression line, PatientRevenue should be added as a linear term. 
+```{r}
+##Create partial regression plot for passing yards, x2, to see if a non linear terms should be used. 
+result.y.PatientRevenue<-lm(NurseSalaries ~ FacilitiesExpend + Rural, data = Data) ##fit y against other predictors
+result.PatientRevenue<-lm(PatientRevenue ~ FacilitiesExpend + Rural, data = Data) ##fit PatientRevenue against other predictors
+res.y.PatientRevenue<-result.y.PatientRevenue$residuals #store the residuals. info in y not explained by PatientRevenue
+res.PatientRevenue<-result.PatientRevenue$residuals ##store residuals. info in PatientRevenue not explained by rest of predictors
+
+#partial regression plot for x2
+#creating regression line
+regPatientRevenue = lm(PatientRevenue~FacilitiesExpend + Rural,Data)
+regyPatientRevenue = lm(NurseSalaries~FacilitiesExpend + Rural,Data)
+
+plot(res.PatientRevenue, res.y.PatientRevenue, main = "Partial Regression Plot of PatientRevenue")
+lmx2 = lm(regyPatientRevenue$residuals ~ regPatientRevenue$residuals)
+abline(lmx2)
+#abline(h=0)
+
+```
+Partial residual plot for FacilitiesExpend
+
+Since the plots are evenly scattered across the regression line, FacilitiesExpend should be added as a linear term. 
+```{r}
+##Create partial regression plot for passing yards, x2, to see if a non linear terms should be used. 
+result.y.FacilitiesExpend<-lm(NurseSalaries ~ PatientRevenue + Rural, data = Data) ##fit y against other predictors
+result.FacilitiesExpend<-lm(FacilitiesExpend ~ PatientRevenue + Rural, data = Data) ##fit FacilitiesExpend against other predictors
+res.y.FacilitiesExpend<-result.y.FacilitiesExpend$residuals #store the residuals. info in y not explained by FacilitiesExpend
+res.FacilitiesExpend<-result.FacilitiesExpend$residuals ##store residuals. info in FacilitiesExpend not explained by rest of predictors
+
+#partial regression plot for x2
+#creating regression line
+regFacilitiesExpend = lm(FacilitiesExpend~PatientRevenue + Rural,Data)
+regyFacilitiesExpend = lm(NurseSalaries~PatientRevenue + Rural,Data)
+#plot
+plot(res.FacilitiesExpend, res.y.FacilitiesExpend, main = "Partial Regression Plot of FacilitiesExpend")
+lmx2 = lm(regyFacilitiesExpend$residuals ~ regFacilitiesExpend$residuals)
+abline(lmx2)
+```
+
+
+The PRESS Statistic is 100651740. The model might be able to explain 28.335% of the variability in the new observations (not great). The R2 is 0.4939. Both values are fairly close to each other, so overfitting is not a major concern.
+
+```{r}
+#function to calculate PRESS Statistic
+PRESS <- function(model) {
+  ## get the residuals from the linear.model.
+## extract hat from lm.influence to obtain the leverages
+    i <- residuals(model)/(1 - lm.influence(model)$hat)
+  ## calculate the PRESS by squaring each term and adding them up
+    sum(i^2)
+}
+#summary(lm.y)
+PRESS(reduced)
+##Find SST
+anova_result<-anova(reduced) 
+SST<-sum(anova_result$"Sum Sq") 
+##R2 pred 
+Rsq_pred <-1-PRESS(reduced)/SST 
+Rsq_pred
+```
+
+
+
+
+```{r}
+reduced2 <- lm(NurseSalaries ~ PatientRevenue + FacilitiesExpend + 
+    Rural, data = Data.small.rural)
+summary(reduced2)
+```
+
+
+
+
+Based on the t-test above, we will drop FacilitesExpend.
+
+```{r}
+reduced3 <- lm(NurseSalaries ~ PatientRevenue + Rural, data = Data.small.rural)
+summary(reduced3)
+```
+
+
