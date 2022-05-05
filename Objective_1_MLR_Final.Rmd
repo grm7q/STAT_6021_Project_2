@@ -1,0 +1,275 @@
+---
+title: "Objective 1 MLR Final Version"
+author: "Greg Madden"
+date: '2022-05-05'
+output: pdf_document
+---
+
+***Group 2 Members:***
+Gregory Madden
+Christina Kuang
+Chi Do
+Trey Hamilton
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, tidy = TRUE, cache =TRUE)
+library(multcomp)
+library(lawstat)
+library(leaps)
+library(tidyverse)
+library(faraway)
+library(Stat2Data)
+#turning off scientific notation
+options(scipen = 99999999) 
+
+#reading in data
+Data <- read.csv("Nursing.csv")
+Data <- subset(Data, select = -c(X))  #remove column X
+
+Data$Rural <- factor(Data$Rural)
+levels(Data$Rural) <- c("Non-Rural", "Rural")
+#contrasts(Data$Rural)
+```
+
+***Our dataset contains characteristics of nursing homes in New Mexico.***
+
+***Description of Dataset (provided by Stat2Data Package)***
+Format: A dataset with 52 observations on the following 7 variables. Each row represents an individual nursing home. 
+
+Variables/Columns: 
+Beds	Number of beds in the nursing home
+InPatientDays	Annual medical in-patient days (in hundreds)
+AllPatientDays	Annual total patient days (in hundreds)
+PatientRevenue	Annual patient care revenue (in hundreds of dollars)
+NurseSalaries	Annual nursing salaries (in hundreds of dollars)
+FacilitiesExpend	Annual facilities expenditure (in hundreds of dollars)
+Rural	1=rural or 0=non-rural
+
+Glimpse of data overview: 
+```{r}
+glimpse(Data)
+```
+
+##***Question 1.*** What characteristics of nursing homes in New Mexico dictate annual nurse salaries at those institutions? 
+
+***Practical implications of a linear model for predicting cumulative annual nurse salaries for a given nursing home could be used by policymakers to rationally distribute subsidy funds to institutions that are expected to contribute the lowest salaries to a particular area.***
+
+***Objective 1: Fit a multiple linear regression model with cumulative annual nurse salaries for individual nursing homes using the available financial characteristics for each institution. The goal is to develop a model using these available data to reliably predict institutions with low annual nursing salaries among the larger group of nursing homes across the state. ***
+
+
+##Exploratory Data Analysis: 
+
+Based on the scatter plots and correlation table, it appears that Nurse Salaries has a moderate correlation with Beds, All Patient Days, and Patient Revenue. There also appears to be a strong linear relationship between Beds and AllPatientDays, Beds and Patient Revenue, In Patient Days and All Patient Days, In Patient Days and Patient Revenue, and All Patient Days and Patient Revenue. 
+
+```{r}
+cor(Data[1:6])
+```
+
+```{r}
+pairs(~ NurseSalaries + PatientRevenue + FacilitiesExpend + Beds + InPatientDays + AllPatientDays, data = Data, lower.panel = NULL)
+```
+
+Nursing home salaries by census in Annual total patient days (in hundreds) and Nursing home size (by number of beds). There appears to be a moderately strong correlation between annual total patient days and average nurse salary, with at least one apparent outlier in terms of high patient days and low salary, observation #26. 
+
+```{r}
+Data %>%
+  ggplot(aes(x=AllPatientDays, y = NurseSalaries, size = PatientRevenue)) +
+  geom_point(alpha = 0.4) +
+  labs(x="Annual total patient days (hundreds)", y="Average Nurse Salary (hundreds $)", title = "Nursing Home Nurse Salaries") +
+  guides(size = guide_legend(title = "Annual patient \ncare revenue\n (hundreds $)"))
+```
+
+Boxplot demonstrating differences in Institutional nurse's salaries in New Mexico for Rural Areas compared with Non-Rural: 
+Based on the box plot, it appears there is a greater variability for non-rural nurse salary. The nurses in non-rural regions also have a higher median salary. 
+
+```{r}
+Data$Rural <- factor(Data$Rural)
+levels(Data$Rural) <- c("Non-Rural", "Rural")
+
+Data %>%
+ggplot(aes(x=Rural, y=NurseSalaries))+
+  geom_boxplot()+
+  labs(x="", y="Nurse Salary", title = "Nursing Home Nurse Salaries (hundreds $)") 
+```
+Scatter plot of Patient Revenue versus Nurse Salaries: 
+The slopes are not parallel, which indicates there is an interaction effect between Patient Revenue and Nurse Salaries. Again seen is outlying observation #26.
+
+```{r}
+ggplot(Data,aes(x=PatientRevenue,y=NurseSalaries,color=Rural))+
+  geom_point()+
+  geom_smooth(method ="lm", se=FALSE)+
+  labs(x="PatientRevenue",y="NurseSalaries",title="PatientRevenue versus NurseSalaries")
+```
+
+##Carrying out initial automated search procedures: 
+
+Using backward selection to find the best model according to AIC. Start with the first-order model with all the predictors.
+
+***The model selected is:  NurseSalaries ~ PatientRevenue + FacilitiesExpend + 
+    Rural***
+
+```{r, include=FALSE}
+#intercept only
+regnull <- lm(NurseSalaries~1,data=Data)
+#full
+regfull <- lm(NurseSalaries~.,data=Data)
+#backward elimination 
+step(regfull, scope=list(lower=regnull,upper=regfull),direction="backward")
+```
+
+Reduced model summary
+
+```{r}
+reduced <- lm(NurseSalaries~PatientRevenue + FacilitiesExpend + 
+    Rural,data=Data)
+summary(reduced)
+```
+
+Identifying outlying observations. 
+
+***Observation #26 is outlying.***
+
+```{r}
+##externally studentized residuals, t_i
+ext.student.res<-rstudent(reduced) 
+##identify outliers with t_i##
+##critical value using Bonferroni procedure
+n<-dim(Data)[1]
+#p is the number of predictors + 1 for the intercept
+p<-4
+crit<-qt(1-0.05/(2*n), n-1-p)
+##identify
+ext.student.res[abs(ext.student.res)>crit]
+```
+
+Identifying observations that have high leverage. 
+
+Calculating the leverage values $h_{ii}$ below and identifying ones that are >2*p/n.
+
+***Observations 26 and 31 have high leverage. ***
+
+```{r}
+lev <-lm.influence(reduced)$hat
+lev[lev>2*p/n]
+```
+
+***Observation # 26 is both outlying in the predictors and appears to have high leverage.*** Unfortunately, this dataset nor the primary reference [Smith et al. "A Comparison of Financial Performance, Organizational Characteristics, and Management Strategy Among Rural and Urban Nursing Facilities," Journal of Rural Health, 1992, pp 27-40.] do not provide identifying information for individual Nursing Home facilities, so we cannot make specific conclusions about the facility for observation #26. What we can say about observation 26 is that it is a relatively large facility with 221 beds, especially among other rural facilities. For example, the number of beds for this facility is 79% higher than the next largest rural nursing home (123 beds). Also, despite very high patient revenue and Patient census, the nurses salary is the lowest of the entire dataset. Therefore, we suspect this facility may not be comparable with other institutions, perhaps owing to it's unique combination of large facility and rural classification. Since our primary objective is to identify low nursing salaries particularly in rural areas, we proposed re-running the regression while excluding observation #26 on the basis that is is an extraordinarily large (>200 beds) rural facility. Future predictions for such institutions will not be made using this model unless rural facilities are under 200 beds. Separate policy considerations will then be made for rare large/rural institutions.
+
+```{r}
+Data <- Data[-26,]
+
+```
+
+Interestingly, after re-running the EDA plots, we noticed that the slope and the intercept of the relationship between PatientRevenue and NurseSalaries no longer appear to change depending on rural vs. non-rural status. This interaction effect appears gone after excluding observation #26. 
+
+```{r}
+Data %>%
+ggplot(aes(x=PatientRevenue,y=NurseSalaries,color=Rural))+
+  geom_point()+
+  geom_smooth(method ="lm", se=FALSE)+
+  labs(x="PatientRevenue",y="NurseSalaries",title="PatientRevenue versus NurseSalaries")
+```
+
+Next, we repeated the automated search procedures with backward selection again after outlier observation #26 was removed.
+
+***The model selected is:  NurseSalaries ~ InPatientDays + AllPatientDays + FacilitiesExpend ***
+
+```{r}
+#intercept only
+regnull <- lm(NurseSalaries~1,data=Data)
+#full
+regfull <- lm(NurseSalaries~.,data=Data)
+#backward elimination 
+step(regfull, scope=list(lower=regnull,upper=regfull),direction="backward")
+```
+
+Reduced model summary
+
+```{r}
+reduced <- lm(NurseSalaries~InPatientDays + AllPatientDays + FacilitiesExpend,data=Data)
+summary(reduced)
+```
+
+
+All VIFs below 4 so multicollinearity does not appear to be an issue. 
+
+```{r}
+#requires package faraway
+vif(reduced)
+```
+
+Checking linear regression assumptions: 
+
+***Assumptions 1/2 appear to be generally met: Mean of Errors = 0, constant variance. ***
+
+```{r}
+
+#storing fitted y residuals
+yhat <- reduced$fitted.values
+res <- reduced$residuals
+#add to data frame
+
+Data <-data.frame(Data,yhat,res)
+
+#residual plot
+Data %>%
+  ggplot(aes(x=yhat,y=res)) +
+  geom_point() +
+  geom_hline(yintercept=0,color="red")+
+  labs(x="fitted y", y = "residuals", title="residual plot")
+```
+
+***ACF Plot: no autocorrelation seen.***
+
+```{r}
+acf(res,main="ACF Plot of Residuals")
+
+```
+
+***Errors are fairly normally distributed.***
+
+```{r}
+qqnorm(res)
+qqline(res,col="red")
+```
+
+Using boxcox method, we see that 1 lies just within the 95% CI for lambda so we did not transform the y variable. 
+
+```{r}
+boxcox(reduced)
+```
+
+Since we will be using this model to predict nursing salaries for new data, we are interested in the $R^2_{prediction}$.
+
+Based on this value, the final model might be able to explain 66.15% of the variability in the new observations (as long as they are not rural facilities >200 beds). The R2 is 0.7176. Both values are fairly close to each other, so overfitting is not a major concern.
+
+```{r}
+#creating function to calculate PRESS statistic
+PRESS <- function(model) {
+    i <- residuals(model)/(1 - lm.influence(model)$hat)
+    sum(i^2)
+}
+
+#PRESS(reduced)
+##Find SST
+anova_result<-anova(reduced) 
+SST<-sum(anova_result$"Sum Sq") 
+##R2 pred 
+Rsq_pred <-1-PRESS(reduced)/SST 
+Rsq_pred
+```
+
+***So, our final regression equation is:*** 
+
+$NursingSalary=366.08897-6.77821*InpatientDays+15.73249*AllPatientDays+0.15552*FacilitiesExpenditure$
+
+***Where bed size for rural institutions is <200, NursingSalary = Estimated Annual nursing salaries (in hundreds of dollars), InpatientDays represents annual medical in-patient days (in hundreds), AllPatientDays represents annual total in-patient days (in hundreds), , FacilitiesExpenditure = hundreds of $.***
+
+
+\underline{Conclusions:} 
+
+1) Patient patient census parameters (both total inpatient days as well as medical inpatient days) and total facilities expenditures appear to be the most important factors in determining nursing salaries among the predictors we looked at (others included PatientRevenue, Rural vs. Non-Rural). 
+
+2) Based on the $R^2_{prediction}$, our final model summarized above might be able to explain 66% of the variability in nursing salaries of future nursing homes, as long as they are not rural facilities >200 beds. 
+
+
