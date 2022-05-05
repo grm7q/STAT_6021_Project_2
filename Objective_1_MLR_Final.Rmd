@@ -21,43 +21,51 @@ library(faraway)
 library(Stat2Data)
 #turning off scientific notation
 options(scipen = 99999999) 
-
-#reading in data
-Data <- read.csv("Nursing.csv")
-Data <- subset(Data, select = -c(X))  #remove column X
-
-Data$Rural <- factor(Data$Rural)
-levels(Data$Rural) <- c("Non-Rural", "Rural")
-#contrasts(Data$Rural)
 ```
 
-***Our dataset contains characteristics of nursing homes in New Mexico.***
+***Our dataset contains characteristics of nursing homes in New Mexico, with 52 observations and 7 variables. Each row represents an individual nursing home.***
 
 ***Description of Dataset (provided by Stat2Data Package)***
-Format: A dataset with 52 observations on the following 7 variables. Each row represents an individual nursing home. 
 
-Variables/Columns: 
+***Variables/Columns: ***
+
 Beds	Number of beds in the nursing home
+
 InPatientDays	Annual medical in-patient days (in hundreds)
+
 AllPatientDays	Annual total patient days (in hundreds)
+
 PatientRevenue	Annual patient care revenue (in hundreds of dollars)
+
 NurseSalaries	Annual nursing salaries (in hundreds of dollars)
+
 FacilitiesExpend	Annual facilities expenditure (in hundreds of dollars)
+
 Rural	1=rural or 0=non-rural
+
+```{r}
+#reading in data
+data(Nursing)
+Data<-Nursing
+Data$Rural <- factor(Data$Rural)
+levels(Data$Rural) <- c("Non-Rural", "Rural")
+#checking categorical variable classifiers
+contrasts(Data$Rural)
+```
 
 Glimpse of data overview: 
 ```{r}
 glimpse(Data)
 ```
 
-##***Question 1.*** What characteristics of nursing homes in New Mexico dictate annual nurse salaries at those institutions? 
+## ***Question 1.*** What characteristics of nursing homes in New Mexico dictate annual nurse salaries at those institutions? 
 
 ***Practical implications of a linear model for predicting cumulative annual nurse salaries for a given nursing home could be used by policymakers to rationally distribute subsidy funds to institutions that are expected to contribute the lowest salaries to a particular area.***
 
 ***Objective 1: Fit a multiple linear regression model with cumulative annual nurse salaries for individual nursing homes using the available financial characteristics for each institution. The goal is to develop a model using these available data to reliably predict institutions with low annual nursing salaries among the larger group of nursing homes across the state. ***
 
 
-##Exploratory Data Analysis: 
+## Exploratory Data Analysis: 
 
 Based on the scatter plots and correlation table, it appears that Nurse Salaries has a moderate correlation with Beds, All Patient Days, and Patient Revenue. There also appears to be a strong linear relationship between Beds and AllPatientDays, Beds and Patient Revenue, In Patient Days and All Patient Days, In Patient Days and Patient Revenue, and All Patient Days and Patient Revenue. 
 
@@ -101,14 +109,14 @@ ggplot(Data,aes(x=PatientRevenue,y=NurseSalaries,color=Rural))+
   labs(x="PatientRevenue",y="NurseSalaries",title="PatientRevenue versus NurseSalaries")
 ```
 
-##Carrying out initial automated search procedures: 
+## Carrying out initial automated search procedures: 
 
 Using backward selection to find the best model according to AIC. Start with the first-order model with all the predictors.
 
 ***The model selected is:  NurseSalaries ~ PatientRevenue + FacilitiesExpend + 
     Rural***
 
-```{r, include=FALSE}
+```{r, echo=FALSE}
 #intercept only
 regnull <- lm(NurseSalaries~1,data=Data)
 #full
@@ -125,24 +133,24 @@ reduced <- lm(NurseSalaries~PatientRevenue + FacilitiesExpend +
 summary(reduced)
 ```
 
-Identifying outlying observations. 
+## Identifying outlying observations. 
 
 ***Observation #26 is outlying.***
 
 ```{r}
-##externally studentized residuals, t_i
+## externally studentized residuals, t_i
 ext.student.res<-rstudent(reduced) 
-##identify outliers with t_i##
-##critical value using Bonferroni procedure
+## identify outliers with t_i## 
+## critical value using Bonferroni procedure
 n<-dim(Data)[1]
 #p is the number of predictors + 1 for the intercept
 p<-4
 crit<-qt(1-0.05/(2*n), n-1-p)
-##identify
+## identify
 ext.student.res[abs(ext.student.res)>crit]
 ```
 
-Identifying observations that have high leverage. 
+##  Identifying observations that have high leverage.
 
 Calculating the leverage values $h_{ii}$ below and identifying ones that are >2*p/n.
 
@@ -183,7 +191,7 @@ regfull <- lm(NurseSalaries~.,data=Data)
 step(regfull, scope=list(lower=regnull,upper=regfull),direction="backward")
 ```
 
-Reduced model summary
+### Final Reduced model summary
 
 ```{r}
 reduced <- lm(NurseSalaries~InPatientDays + AllPatientDays + FacilitiesExpend,data=Data)
@@ -191,14 +199,14 @@ summary(reduced)
 ```
 
 
-All VIFs below 4 so multicollinearity does not appear to be an issue. 
+***All VIFs below 4 so multicollinearity does not appear to be an issue. ***
 
 ```{r}
 #requires package faraway
 vif(reduced)
 ```
 
-Checking linear regression assumptions: 
+## Checking linear regression assumptions: 
 
 ***Assumptions 1/2 appear to be generally met: Mean of Errors = 0, constant variance. ***
 
@@ -251,22 +259,21 @@ PRESS <- function(model) {
 }
 
 #PRESS(reduced)
-##Find SST
+## Find SST
 anova_result<-anova(reduced) 
 SST<-sum(anova_result$"Sum Sq") 
-##R2 pred 
+## R2 pred 
 Rsq_pred <-1-PRESS(reduced)/SST 
 Rsq_pred
 ```
 
-***So, our final regression equation is:*** 
+## So, our final regression equation is: 
 
 $NursingSalary=366.08897-6.77821*InpatientDays+15.73249*AllPatientDays+0.15552*FacilitiesExpenditure$
 
-***Where bed size for rural institutions is <200, NursingSalary = Estimated Annual nursing salaries (in hundreds of dollars), InpatientDays represents annual medical in-patient days (in hundreds), AllPatientDays represents annual total in-patient days (in hundreds), , FacilitiesExpenditure = hundreds of $.***
+***Where bed size for rural institutions is <200, NursingSalary = Estimated Annual nursing salaries (in hundreds of dollars), InpatientDays represents annual medical in-patient days (in hundreds), AllPatientDays represents annual total in-patient days (in hundreds), and FacilitiesExpenditure = hundreds of $.***
 
-
-\underline{Conclusions:} 
+## \underline{Conclusions:} 
 
 1) Patient patient census parameters (both total inpatient days as well as medical inpatient days) and total facilities expenditures appear to be the most important factors in determining nursing salaries among the predictors we looked at (others included PatientRevenue, Rural vs. Non-Rural). 
 
