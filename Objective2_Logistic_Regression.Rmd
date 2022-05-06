@@ -2,12 +2,15 @@
 title: "Objective2_Logistic_Regression"
 author: "Christina Kuang"
 date: "4/19/2022"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(ROCR)
+library(gridExtra)
 #turning off scientific notation
 options(scipen = 99999999) 
 
@@ -21,79 +24,125 @@ levels(Data$Rural) <- c("Non-Rural", "Rural")
 contrasts(Data$Rural)
 ```
 
+**Question 2) What characteristics of nursing homes in New Mexico help predict if a nursing home is rural or non-rural?**
+
+***Rural patients suffer from a lack of locally available nursing home beds. Understanding the relationships of these characteristics and how they define  rural vs. non-rural nursing homes is helpful to know how to make rural nursing homes financially viable. ***
+
+
+**Objective 2: Use characteristics of nursing homes variables to develop a logistic regression model that helps predict whether a nursing home is rural or non-rural**
+
+
 ```{r}
 set.seed(10) ##for reproducibility to get the same split
-sample<-sample.int(nrow(Data), floor(.80*nrow(Data)), replace = F)
+sample<-sample.int(nrow(Data), floor(.8*nrow(Data)), replace = F)
 train<-Data[sample, ] ##training data frame
 test<-Data[-sample, ] ##test data frame
 ```
 
+## Data Exploration
+The density plots of nurse salaries for rural is right skewed, which means a higher proportion of rural nursing homes have lower annual nurse salaries. In contrast, the density plots of nurse salaries for non-rural is left skewed, which means a higher proportion of non-rural nursing homes have higher annual nurse salaries. 
+ 
+Similarly, the density plots of patient revenue for rural is right skewed, which means a higher proportion of rural nursing homes have lower annual patient revenues. In contrast, the density plots of nurse salaries for non-rural is left skewed, which means a higher proportion of non-rural nursing homes have higher annual patient revenues. 
+ 
+These two variables, nurse salaries and patient revenue, may be good predictors, because the density plots for rural and non-rural are not very similar.
+ 
+In comparison, the density plots of beds, patient days, all patient days, and facilities expenditure are similar for rural and non-rural nursing home facilities. As a result, these variables are less likely to be good predictors for whether a nursing home is rural or non-rural. 
+
 ```{r}
-ggplot(Data, aes(x=NurseSalaries, color=Rural))+
+g1<-ggplot(Data, aes(x=NurseSalaries, color=Rural))+
   geom_density()+
   labs(title="Nurse Salaries by Rural vs. Non-rural")
-```
-```{r}
-ggplot(Data, aes(x=Beds, color=Rural))+
+
+g2<-ggplot(Data, aes(x=Beds, color=Rural))+
   geom_density()+
   labs(title="Beds by Rural vs. Non-rural")
-```
-
-```{r}
-ggplot(Data, aes(x=InPatientDays, color=Rural))+
+g3<-ggplot(Data, aes(x=InPatientDays, color=Rural))+
   geom_density()+
   labs(title="In Patient Days by Rural vs. Non-rural")
-```
-```{r}
-ggplot(Data, aes(x=AllPatientDays, color=Rural))+
+
+g4<-ggplot(Data, aes(x=AllPatientDays, color=Rural))+
   geom_density()+
   labs(title="All Patient Days by Rural vs. Non-rural")
-```
 
-```{r}
-ggplot(Data, aes(x=PatientRevenue, color=Rural))+
+g5<-ggplot(Data, aes(x=PatientRevenue, color=Rural))+
   geom_density()+
   labs(title="Patient Revenue by Rural vs. Non-rural")
-```
-```{r}
-ggplot(Data, aes(x=FacilitiesExpend, color=Rural))+
+
+g6<-ggplot(Data, aes(x=FacilitiesExpend, color=Rural))+
   geom_density()+
   labs(title="Facilities Expenditure by Rural vs. Non-rural")
+
+grid.arrange(g1,g2,g3,g4,g5,g6, ncol = 2, nrow = 3)
 ```
+
+## Full Logistic Regression Model with all predictors
 ```{r}
 result <- glm(Rural~NurseSalaries+FacilitiesExpend+Beds+PatientRevenue+AllPatientDays+InPatientDays, family = "binomial", data=train)
 summary(result)
 ```
 
-H0: $\beta_1 = \beta_2 = \beta_3 = \beta_4 = \beta_5 = \beta_6 = 0$
-Ha: at least one of the coefficients (betas) in H0 is not zero. 
+## Wald Test for β1
 
-Since the p-value is 0.018 and it is less than 0.05, we reject the null hypothesis. The 6 predictor model is better at prediction than the intercept-only model. 
+$H_0:\beta_1 = 0$  
+$H_a:\beta_1 \ne 0$  
+
+With a p-value of 0.04, we can reject the null hypothesis. There appears to be a significant relationship between $\beta_1$ and the response variable. 
+
+## 95% onfidence interval for β1
+
+The 95% confidence interval for β1 is (-0.001413439498, -0.000005500502). In other words, we are 95% confident the odds of a nursing home being rural is between (exp -0.001413439498, exp -0.000005500502) = (0.9985876, 0.9999945) times the odds of a nursing home being non-rural, for given value of other predictors. Since 0 does not lie within the confidence interval, there appears to be a significant effect of nurse salaries on whether a nursing home facility is rural or non-rural, for given values of other predictors. This is consistent with our Wald Test results $\beta_1$.
+
+
 ```{r}
-#delta G^2 test to see if coefficients for all predictors are 0. Null deviance in output minus residual deviance in output. 
-TS <- result$null.deviance-result$deviance
+n <- 41
+p <- 7
+se_beta1 <- 0.00034640
+beta1 <- -0.00070947
+critical <-qt((1-(0.05/2)),(n-p))
+multiplier <- critical*se_beta1
+lower_bound <- beta1 - multiplier
+upper_bound <- beta1 + multiplier
+print(c(lower_bound,upper_bound))
+```
+
+## Delta G-Squared Test to see if we can drop predictors (Beds, InPatientDays, AllPatientDays, PatientRevenue, and FacilitiesExpend) that have an insignificant Wald test.
+
+$\beta_1 = NurseSalaries$  
+$\beta_2 = Beds, InPatientDays, AllPatientDays, PatientRevenue, FacilitiesExpend$  
+
+H0: predictors in $\beta_2 = 0$   
+Ha: at least one of the coefficients in $\beta_2$ is nonzero  
+
+With a p-value of 0.35, we fail to reject the null. Since none of the subset predictors appear to be significant, we can drop them from our model. 
+```{r}
+reduced <- glm(Rural~NurseSalaries, family = "binomial", data=train)
+summary(reduced)
+
+TS <- reduced$deviance-result$deviance
 TS
 
 1-pchisq(TS,5)
 ```
 
-$\beta_1 = NurseSalaries$
-$\beta_2 = Beds, InPatientDays, AllPatientDays, PatientRevenue, FacilitiesExpend$
+## Delta G-squared Test to see if our model is better than the intercept-only model
+$H_0$: $\beta_1 = 0$  
+$H_a$: $\beta_1 \ne 0$ 
 
-H0: predictors in $\beta_2 = 0$ 
-Ha: at least one of the coefficients in beta2 is nonzero
-
-Faile to reject the null. can remove the 5 predictors. 
+The test statistic is 8.53 with a p-value of 0.014. Since the p-value is less than 0.05, we can reject the null hypothesis. The model is better at prediction than the intercept-only model. 
 ```{r}
-reduced <- glm(Rural~NurseSalaries, family = "binomial", data=train)
-summary(reduced)
-
-TS_2 <- reduced$deviance-result$deviance
+#delta G^2 test to see if coefficients for all predictors are 0. Null deviance in output minus residual deviance in output. 
+TS_2 <- reduced$null.deviance-reduced$deviance
 TS_2
 
-1-pchisq(TS_2,5)
+1-pchisq(TS_2,2)
 ```
 
+## Final Model
+$log(\pi/(1-\pi))$= 3.0935426 -0.0006423(NurseSalaries)
+
+## Validate model using testing data
+
+Since the ROC curve is above the diagonal line and AUC value is greater than 0.5, it tells us that the logistic regression model performs better than random guessing. 
 ```{r}
 ##predicted survival rate for test data based on training data
 preds<-predict(reduced,newdata=test, type="response")
@@ -113,9 +162,10 @@ lines(x = c(0,1), y = c(0,1), col="red")
 ##compute the AUC
 auc<-performance(rates, measure = "auc")
 auc@y.values
-hist(preds)
 ```
 
+## Confusion Matrix
+With a threshold of 0.4, the error rate is 0.09 and the accuracy rate is 0.91. In addition, the false positive rate is 0.33 and the false negative rate is 0. We decided to set the threshold to 0.4, because we are more concerned with the false negative rate. We want a lower false negative rate, because we don’t want to classify a nursing home as non-rural when it is indeed rural. If we incorrectly classify a rural nursing home facility as non-rural, it may affect the facilities' overall public funding. It is also important to note that since the dataset is small with an unblanaced number of rural and non-rural nursing homes.
 ```{r}
 ##confusion matrix. Actual values in the rows, predicted classification in cols
 confusion <- table(test$Rural, preds>0.4)
@@ -127,7 +177,17 @@ tp <- confusion[2,2]
 tn <- confusion[1,1]
 fp <- confusion[1,2]
 fn <- confusion[2,1]
+fpr <- fp/(tn+fp)
+fpr
+fnr <- fn/(fn+tp)
+fnr
 error_rate <- (fp+fn)/(fp+fn+tn+tp)
+error_rate
 accuracy_rate <- (tp+tn)/(fp+fn+tn+tp)
-
+accuracy_rate
 ```
+
+## Conclusion
+**Based on our results, we conclude that nursing  salaries appear to be the most important factor in determining if a nursing home is rural or non-rural. This information can be used by policymakers to close the financial gap between rural and non-rural nursing homes.**
+**For each additional $100 in annual nurse salary, the log odds of being a rural nursing home facility decreases by 0.00064.**
+
