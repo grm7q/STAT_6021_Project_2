@@ -275,7 +275,7 @@ $NursingSalary=366.08897-6.77821*InpatientDays+15.73249*AllPatientDays+0.15552*F
 
 ## \underline{Conclusions:} 
 
-1) Patient patient census parameters (both total inpatient days as well as medical inpatient days) and total facilities expenditures appear to be the most important factors in determining nursing salaries among the predictors we looked at (others included PatientRevenue, Rural vs. Non-Rural). 
+1) Patient census parameters (both total inpatient days as well as medical inpatient days) and total facilities expenditures appear to be the most important factors in determining nursing salaries among the predictors we looked at (others included PatientRevenue, Rural vs. Non-Rural). 
 
 2) Based on the $R^2_{prediction}$, our final model summarized above might be able to explain 66% of the variability in nursing salaries of future nursing homes, as long as they are not rural facilities >200 beds. 
 
