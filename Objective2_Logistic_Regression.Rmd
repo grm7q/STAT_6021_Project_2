@@ -81,16 +81,16 @@ result <- glm(Rural~NurseSalaries+FacilitiesExpend+Beds+PatientRevenue+AllPatien
 summary(result)
 ```
 
-## Wald Test for β1
+## Wald Test for $\beta$1
 
 $H_0:\beta_1 = 0$  
 $H_a:\beta_1 \ne 0$  
 
 With a p-value of 0.04, we can reject the null hypothesis. There appears to be a significant relationship between $\beta_1$ and the response variable. 
 
-## 95% onfidence interval for β1
+## 95% onfidence interval for $\beta_1$
 
-The 95% confidence interval for β1 is (-0.001413439498, -0.000005500502). In other words, we are 95% confident the odds of a nursing home being rural is between (exp -0.001413439498, exp -0.000005500502) = (0.9985876, 0.9999945) times the odds of a nursing home being non-rural, for given value of other predictors. Since 0 does not lie within the confidence interval, there appears to be a significant effect of nurse salaries on whether a nursing home facility is rural or non-rural, for given values of other predictors. This is consistent with our Wald Test results $\beta_1$.
+The 95% confidence interval for $\beta$ is (-0.001413439498, -0.000005500502). In other words, we are 95% confident the odds of a nursing home being rural is between (exp -0.001413439498, exp -0.000005500502) = (0.9985876, 0.9999945) times the odds of a nursing home being non-rural, for given value of other predictors. Since 0 does not lie within the confidence interval, there appears to be a significant effect of nurse salaries on whether a nursing home facility is rural or non-rural, for given values of other predictors. This is consistent with our Wald Test results $\beta_1$.
 
 
 ```{r}

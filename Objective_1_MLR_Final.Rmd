@@ -273,7 +273,7 @@ $NursingSalary=366.08897-6.77821*InpatientDays+15.73249*AllPatientDays+0.15552*F
 
 ***Where bed size for rural institutions is <200, NursingSalary = Estimated Annual nursing salaries (in hundreds of dollars), InpatientDays represents annual medical in-patient days (in hundreds), AllPatientDays represents annual total in-patient days (in hundreds), and FacilitiesExpenditure = hundreds of $.***
 
-## \underline{Conclusions:} 
+## \underline{Objective 1 Conclusions:} 
 
 1) Patient census parameters (both total inpatient days as well as medical inpatient days) and total facilities expenditures appear to be the most important factors in determining nursing salaries among the predictors we looked at (others included PatientRevenue, Rural vs. Non-Rural). 
 
